@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { createStore } from 'vuex'
-const bStoreURL = 'https://volunteerventures.onrender.com/'
+const bStoreURL = 'https://campreserve.onrender.com/'
 
 export default createStore({
   state: {
