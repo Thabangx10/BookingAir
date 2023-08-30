@@ -4,9 +4,10 @@ const bStoreURL = 'https://volunteerventures.onrender.com/'
 
 export default createStore({
   state: {
-    user: null,
+    // user: null,
     message: null,
     loading: false,
+    user: [],
     users: [],
     programs: [],
     flights: [],
@@ -28,6 +29,9 @@ export default createStore({
       state.cart = state.cart.filter(f => f !== flight);
     },
     
+    // removeFlight(state, index) {
+    //   state.bookedFlights.splice(index, 1);
+    // },
     setLoading(state, loading) {
       state.loading = loading
     },
@@ -91,6 +95,9 @@ export default createStore({
     setFlights (state, flights) {
       state.flights = flights;
     },
+    // setFlight (state, flight) {
+    //   state.flight = flight;
+    // },
     addFlight(state, flights) {
       state.flights = flights;
     },
@@ -110,6 +117,12 @@ export default createStore({
 
     // ------------------------------------------REGISTER/LOGIN-----------------------------------------------------
     actions: {
+      // removeFlight({ commit, state }, flight) {
+      //   const index = state.bookedFlights.indexOf(flight);
+      //   if (index !== -1) {
+      //     commit('removeFlight', index);
+      //   }
+      // },
     async register (context, payload) {
       console.log(payload);
       const res = await axios.post(`${bStoreURL}register`, payload)
