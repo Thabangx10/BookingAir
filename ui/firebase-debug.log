@@ -1,0 +1,159 @@
+[debug] [2023-08-29T13:37:24.636Z] ----------------------------------------------------------------------
+[debug] [2023-08-29T13:37:24.639Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Thabang\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js init
+[debug] [2023-08-29T13:37:24.639Z] CLI Version:   12.5.2
+[debug] [2023-08-29T13:37:24.639Z] Platform:      win32
+[debug] [2023-08-29T13:37:24.640Z] Node Version:  v20.5.0
+[debug] [2023-08-29T13:37:24.640Z] Time:          Tue Aug 29 2023 15:37:24 GMT+0200 (South Africa Standard Time)
+[debug] [2023-08-29T13:37:24.640Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2023-08-29T13:37:24.702Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2023-08-29T13:37:24.703Z] > authorizing via signed-in user (thabangx10@gmail.com)
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  C:\Users\Thabang\BookingAir\ui
+
+Before we get started, keep in mind:
+
+  * You are initializing within an existing Firebase project directory
+
+[info] 
+=== Project Setup
+[info] 
+[info] First, let's associate this project directory with a Firebase project.
+[info] You can create multiple project aliases by running firebase use --add, 
+[info] but for now we'll just set up a default project.
+[info] 
+[debug] [2023-08-29T13:37:34.591Z] Using project from CLI flag: volunteerventures2023
+[debug] [2023-08-29T13:37:34.593Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/volunteerventures2023 [none]
+[debug] [2023-08-29T13:37:35.235Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/volunteerventures2023 403
+[debug] [2023-08-29T13:37:35.235Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/volunteerventures2023 {"error":{"code":403,"message":"The caller does not have permission","status":"PERMISSION_DENIED"}}
+[debug] [2023-08-29T13:37:35.235Z] HTTP Error: 403, The caller does not have permission
+[debug] [2023-08-29T13:37:35.723Z] FirebaseError: HTTP Error: 403, The caller does not have permission
+    at responseToError (C:\Users\Thabang\AppData\Roaming\npm\node_modules\firebase-tools\lib\responseToError.js:49:12)
+    at RetryOperation._fn (C:\Users\Thabang\AppData\Roaming\npm\node_modules\firebase-tools\lib\apiv2.js:285:77)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+[error] 
+[error] Error: Failed to get Firebase project volunteerventures2023. Please make sure the project exists and your account has permission to access it.
+[debug] [2023-08-29T13:38:17.917Z] ----------------------------------------------------------------------
+[debug] [2023-08-29T13:38:17.919Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Thabang\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js init
+[debug] [2023-08-29T13:38:17.919Z] CLI Version:   12.5.2
+[debug] [2023-08-29T13:38:17.919Z] Platform:      win32
+[debug] [2023-08-29T13:38:17.919Z] Node Version:  v20.5.0
+[debug] [2023-08-29T13:38:17.919Z] Time:          Tue Aug 29 2023 15:38:17 GMT+0200 (South Africa Standard Time)
+[debug] [2023-08-29T13:38:17.919Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2023-08-29T13:38:17.968Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2023-08-29T13:38:17.968Z] > authorizing via signed-in user (thabangx10@gmail.com)
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  C:\Users\Thabang\BookingAir\ui
+
+Before we get started, keep in mind:
+
+  * You are initializing within an existing Firebase project directory
+
+[info] 
+=== Project Setup
+[info] 
+[info] First, let's associate this project directory with a Firebase project.
+[info] You can create multiple project aliases by running firebase use --add, 
+[info] but for now we'll just set up a default project.
+[info] 
+[debug] [2023-08-29T13:38:22.444Z] Using project from CLI flag: lcacapestone
+[debug] [2023-08-29T13:38:22.445Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/lcacapestone [none]
+[debug] [2023-08-29T13:38:23.204Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/lcacapestone 403
+[debug] [2023-08-29T13:38:23.204Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/lcacapestone {"error":{"code":403,"message":"The caller does not have permission","status":"PERMISSION_DENIED"}}
+[debug] [2023-08-29T13:38:23.205Z] HTTP Error: 403, The caller does not have permission
+[debug] [2023-08-29T13:38:23.662Z] FirebaseError: HTTP Error: 403, The caller does not have permission
+    at responseToError (C:\Users\Thabang\AppData\Roaming\npm\node_modules\firebase-tools\lib\responseToError.js:49:12)
+    at RetryOperation._fn (C:\Users\Thabang\AppData\Roaming\npm\node_modules\firebase-tools\lib\apiv2.js:285:77)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+[error] 
+[error] Error: Failed to get Firebase project lcacapestone. Please make sure the project exists and your account has permission to access it.
+[debug] [2023-08-29T13:52:45.137Z] ----------------------------------------------------------------------
+[debug] [2023-08-29T13:52:45.140Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Thabang\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js init
+[debug] [2023-08-29T13:52:45.140Z] CLI Version:   12.5.2
+[debug] [2023-08-29T13:52:45.140Z] Platform:      win32
+[debug] [2023-08-29T13:52:45.140Z] Node Version:  v20.5.0
+[debug] [2023-08-29T13:52:45.140Z] Time:          Tue Aug 29 2023 15:52:45 GMT+0200 (South Africa Standard Time)
+[debug] [2023-08-29T13:52:45.140Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2023-08-29T13:52:45.206Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2023-08-29T13:52:45.207Z] > authorizing via signed-in user (thabangx10@gmail.com)
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  C:\Users\Thabang\BookingAir\ui
+
+Before we get started, keep in mind:
+
+  * You are initializing within an existing Firebase project directory
+
+[info] 
+=== Project Setup
+[info] 
+[info] First, let's associate this project directory with a Firebase project.
+[info] You can create multiple project aliases by running firebase use --add, 
+[info] but for now we'll just set up a default project.
+[info] 
+[debug] [2023-08-29T13:53:15.613Z] Using project from CLI flag: lcacapestone
+[debug] [2023-08-29T13:53:15.615Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/lcacapestone [none]
+[debug] [2023-08-29T13:53:16.636Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/lcacapestone 403
+[debug] [2023-08-29T13:53:16.636Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/lcacapestone {"error":{"code":403,"message":"The caller does not have permission","status":"PERMISSION_DENIED"}}
+[debug] [2023-08-29T13:53:16.637Z] HTTP Error: 403, The caller does not have permission
+[debug] [2023-08-29T13:53:17.108Z] FirebaseError: HTTP Error: 403, The caller does not have permission
+    at responseToError (C:\Users\Thabang\AppData\Roaming\npm\node_modules\firebase-tools\lib\responseToError.js:49:12)
+    at RetryOperation._fn (C:\Users\Thabang\AppData\Roaming\npm\node_modules\firebase-tools\lib\apiv2.js:285:77)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+[error] 
+[error] Error: Failed to get Firebase project lcacapestone. Please make sure the project exists and your account has permission to access it.
+[debug] [2023-08-29T13:56:26.100Z] ----------------------------------------------------------------------
+[debug] [2023-08-29T13:56:26.102Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Thabang\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy
+[debug] [2023-08-29T13:56:26.103Z] CLI Version:   12.5.2
+[debug] [2023-08-29T13:56:26.103Z] Platform:      win32
+[debug] [2023-08-29T13:56:26.103Z] Node Version:  v20.5.0
+[debug] [2023-08-29T13:56:26.103Z] Time:          Tue Aug 29 2023 15:56:26 GMT+0200 (South Africa Standard Time)
+[debug] [2023-08-29T13:56:26.103Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2023-08-29T13:56:26.170Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2023-08-29T13:56:26.171Z] > authorizing via signed-in user (thabangx10@gmail.com)
+[debug] [2023-08-29T13:56:26.171Z] [iam] checking project lcacapestone for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2023-08-29T13:56:26.173Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/lcacapestone:testIamPermissions [none]
+[debug] [2023-08-29T13:56:26.173Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/lcacapestone:testIamPermissions x-goog-quota-user=projects/lcacapestone
+[debug] [2023-08-29T13:56:26.174Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/lcacapestone:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2023-08-29T13:56:28.433Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/lcacapestone:testIamPermissions 200
+[debug] [2023-08-29T13:56:28.433Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/lcacapestone:testIamPermissions {}
+[debug] [2023-08-29T13:56:28.433Z] [iam] error while checking permissions, command may fail: FirebaseError: Authorization failed. This account is missing the following required permissions on project lcacapestone:
+
+  firebase.projects.get
+  firebasehosting.sites.update
+[debug] [2023-08-29T13:56:28.433Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/lcacapestone [none]
+[debug] [2023-08-29T13:56:29.351Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/lcacapestone 403
+[debug] [2023-08-29T13:56:29.351Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/lcacapestone {"error":{"code":403,"message":"The caller does not have permission","status":"PERMISSION_DENIED"}}
+[debug] [2023-08-29T13:56:29.352Z] HTTP Error: 403, The caller does not have permission
+[debug] [2023-08-29T13:56:29.855Z] FirebaseError: HTTP Error: 403, The caller does not have permission
+    at responseToError (C:\Users\Thabang\AppData\Roaming\npm\node_modules\firebase-tools\lib\responseToError.js:49:12)
+    at RetryOperation._fn (C:\Users\Thabang\AppData\Roaming\npm\node_modules\firebase-tools\lib\apiv2.js:285:77)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+[error] 
+[error] Error: Failed to get Firebase project lcacapestone. Please make sure the project exists and your account has permission to access it.
