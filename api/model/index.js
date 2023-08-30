@@ -106,39 +106,122 @@ class User {
     });
   }
 
-  // Create a new user and save their information in the database
   async register(req, res) {
-    // Get user information from the request body
-    let detail = req.body;
-    // Hash the user's password using bcrypt with a cost factor of 15
-    detail.UserPassword = await hash(detail.UserPassword, 15);
-    // Set user information that will be used for authentication
-    let user = {
-      Email: detail.Email,
-      UserPassword: detail.UserPassword,
-    };
-    // SQL query to insert a new user into the database
-    const loginQRY = `
+    try {
+      const data = req.body;
+
+      // Ensure data.userPass is a valid string and meets password criteria
+      const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+      if (!passwordRegex.test(data.userPass)) {
+        return res.status(400).json({
+          status: 400,
+          msg: 'Invalid password. It must contain at least 8 characters, including one uppercase letter, one lowercase letter, one number, and one special character.',
+        });
+      }
+
+      // Generate a salt
+      const saltRounds = 15;
+      const salt = await bcrypt.genSalt(saltRounds);
+
+      // Encrypt the password using the generated salt
+      const hashedPassword = await bcrypt.hash(data.userPass, salt);
+
+      // Create a user object with email and hashed password
+      const user = {
+        emailAdd: data.emailAdd,
+        userPass: hashedPassword,
+      };
+
+      // Insert the user data into the database
+      const query = `
         INSERT INTO Users
         SET ?;
-    `;
-    // Execute the query with user information as a parameter
-    database.query(loginQRY, [detail], (err) => {
-      if (err) {
-        // If there's an error, return an error message
-        res.status(401).json({ err });
-      } else {
-        // If successful, create a JSON Web Token and save it in a cookie with a duration of 1 hour
-        const jwToken = createToken(user);
-        res.cookie("LegitUser", jwToken, {
-          maxAge: 3600000,
-          httpOnly: true,
-        });
-        // Return a success message
-        res.status(200).json({ msg: "A user record was saved." });
-      }
-    });
+      `;
+      db.query(query, user, (err) => {
+        if (err) {
+          console.error(err);
+          res.status(500).json({
+            status: 500,
+            msg: "Registration failed.",
+          });
+        } else {
+          // Create a token for the registered user
+          const token = createToken(user);
+
+          res.status(201).json({
+            status: 201,
+            msg: "You are now registered.",
+            token: token,
+          });
+        }
+      });
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({
+        status: 500,
+        msg: "Registration failed.",
+      });
+    }
   }
+
+  // Login endpoint
+  async login(req, res) {
+    try {
+      const data = req.body;
+
+      // Retrieve the user from the database by email
+      const query = `
+        SELECT *
+        FROM Users
+        WHERE emailAdd = ?;
+      `;
+      db.query(query, [data.emailAdd], async (err, results) => {
+        if (err) {
+          console.error(err);
+          return res.status(500).json({
+            status: 500,
+            msg: "Login failed.",
+          });
+        }
+
+        if (results.length === 0) {
+          return res.status(401).json({
+            status: 401,
+            msg: "Invalid credentials.",
+          });
+        }
+
+        const user = results[0];
+
+        // Compare the provided password with the stored hashed password
+        const passwordMatch = await bcrypt.compare(data.userPass, user.userPass);
+
+        if (!passwordMatch) {
+          return res.status(401).json({
+            status: 401,
+            msg: "Invalid credentials.",
+          });
+        }
+
+        // Create a token for the logged-in user
+        const token = createToken(user);
+
+        res.status(200).json({
+          status: 200,
+          msg: "Login successful.",
+          token: token,
+        });
+      });
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({
+        status: 500,
+        msg: "Login failed.",
+      });
+    }
+  }
+
   updateUser(req, res) {
     // Get the data from the request body
     let data = req.body;
@@ -174,79 +257,67 @@ class User {
   }
 }
 
+// Token generation function
+// function createToken(user) {
+//   const token = jwt.sign({ emailAdd: user.emailAdd }, 'Air', { expiresIn: '1h' });
+//   return token;
+// }
+
 // -------------------------------------------A class for handling programs-related operations-------------------------------------------------
 class Program {
-  // Fetch all products
+  // Fetch all coding bootcamp programs
   retrievePrograms(req, res) {
-    const loginQRY = `SELECT ID, ProgramName, Location, 
-        Period, ProgramDescription, imgURL
-        FROM VolunteerPrograms;`;
-    // Run the SQL query
-    database.query(loginQRY, (err, results) => {
+    const query = `SELECT ID, ProgramName, Location, Period, ProgramDescription, imgURL FROM codingPrograms;`;
+    database.query(query, (err, results) => {
       if (err) throw err;
-      // Return the query results
       res.status(200).json({ results: results });
     });
   }
-  // Fetch a specific product using the program id
+
+  // Fetch a specific program using the program id
   retrieveProgram(req, res) {
-    const loginQRY = `SELECT ID, ProgramName, Location, 
-    Period, ProgramDescription, imgURL
-    FROM VolunteerPrograms
-        WHERE ID = ?;`;
-    // Run the SQL query with a parameterized query
-    database.query(loginQRY, [req.params.id], (err, results) => {
+    const query = `SELECT ID, ProgramName, Location, Period, ProgramDescription, imgURL FROM codingPrograms WHERE ID = ?;`;
+    database.query(query, [req.params.id], (err, results) => {
       if (err) throw err;
-      // Return the query results
       res.status(200).json({ results: results });
     });
   }
-  // Add a new program
+
+  // Add a new coding bootcamp program
   addProgram(req, res) {
-    const loginQRY = `
-        INSERT INTO VolunteerPrograms
-        SET ?;
-        `;
-    // Run the SQL query with the request body as the data
-    database.query(loginQRY, [req.body], (err) => {
+    const query = `INSERT INTO codingPrograms SET ?;`;
+    database.query(query, [req.body], (err) => {
       if (err) {
-        // Return an error if the query fails
         res.status(400).json({ err: "Unable to insert a new record." });
       } else {
-        // Return a success message if the query succeeds
-        res.status(200).json({ msg: "VolunteerPrograms saved" });
+        res.status(200).json({ msg: "Coding bootcamp program saved" });
       }
     });
   }
-  // Update an existing product using the product id
+
+  // Update an existing program using the program id
   updateProgram(req, res) {
-    const loginQRY = `
-        UPDATE VolunteerPrograms
-        SET ?
-        WHERE ID = ?
-        `;
-    // Run the SQL query with the request body and product id as parameters
-    database.query(loginQRY, [req.body, req.params.id], (err) => {
+    const query = `UPDATE codingPrograms SET ? WHERE ID = ?;`;
+    database.query(query, [req.body, req.params.id], (err) => {
       if (err) {
-        // Return an error if the query fails
         res.status(400).json({ err: "Unable to update record." });
       } else {
-        // Return a success message if the query succeeds
-        res.status(200).json({ msg: "VolunteerPrograms updated" });
+        res.status(200).json({ msg: "Coding bootcamp program updated" });
       }
     });
   }
-  // Delete an existing product using the product id
+
+  // Delete an existing program using the program id
   deleteProgram(req, res) {
-    const loginQRY = `
-        DELETE FROM VolunteerPrograms
-        WHERE ID = ?;
-        `;
-    // Run the SQL query with the product id as a parameter
-    database.query(loginQRY, [req.params.id], (err) => {
-      if (err) res.status(400).json({ err: "The record was not found." });
-      // Return a success message if the query succeeds
-      res.status(200).json({ msg: "A VolunteerPrograms was deleted." });
+    const query = `DELETE FROM codingPrograms WHERE ID = ?;`;
+    database.query(query, [req.params.id], (err, results) => {
+      if (err) {
+        res.status(400).json({ err: "The record was not found." });
+      } else if (results.affectedRows === 0) {
+        res.status(404).json({ err: "Program not found." });
+      } else {
+        res.status(200).json({ msg: "A coding bootcamp program was deleted." });
+      }
     });
   }
 }
