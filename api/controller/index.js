@@ -17,7 +17,7 @@ const booking = new Bookings();
 // Set up the route for the homepage
 // This route matches either the root URL or /VolunteerVentures
 // It sends the index.html file located in the view directory
-route.get("^/$|/VolunteerVentures", (req, res) => {
+route.get("^/$|/BookingAir", (req, res) => {
   res.status(200).sendFile(path.join(__dirname, "../view/index.html"));
 });
 
