@@ -1,5 +1,8 @@
 {
   "projects": {
-    "default": "lcacapestone"
-  }
+    "default": "lcacapstone",
+    "frontend": "lcacapstone-ff9bd"
+  },
+  "targets": {},
+  "etags": {}
 }

@@ -4,7 +4,8 @@
       <img
         srcset="
           https://i.postimg.cc/B68jg3qP/Experience-the-world-while-making-an-impact-on-lives-2.png,
-          https://i.postimg.cc/B68jg3qP/Experience-the-world-while-making-an-impact-on-lives-2-2x.png 2x"
+          https://i.postimg.cc/B68jg3qP/Experience-the-world-while-making-an-impact-on-lives-2-2x.png 2x
+        "
         alt=""
         class="bg"
       />
@@ -12,23 +13,38 @@
     <h1 class="title">Welcome</h1>
     <div class="welcome">
       <p class="description">
-        We are delighted to have you here, and we cannot wait to help you embark
-        on your journey of making a difference.
+        Welcome to an exciting journey of learning and adventure, designed
+        especially for young minds across Africa!
         <br />
         <br />
-        Our mission is to provide you with a seamless and elegant travel
-        experience while connecting you with meaningful volunteer opportunities
-        across the globe.
+        Our mission is to empower kids in Africa with the skills of the future
+        through our coding bootcamps in South Africa. We're thrilled to offer a
+        unique opportunity for young explorers to delve into the world of coding
+        and technology while experiencing the beauty of South Africa.
         <br />
         <br />
-        We are passionate about making your travel dreams come true. Whether
-        you're looking to immerse yourself in a new culture, work on a community
-        project, or teach English to children, we have the perfect program for
-        you. Thank you for choosing us as your travel partner. We look forward
-        to serving you with the utmost elegance and sophistication.
+        At our bootcamps, your child will not only learn to code but also gain
+        valuable problem-solving skills, creativity, and a deep understanding of
+        technology. It's more than just education; it's a chance to unlock their
+        potential and open doors to a world of opportunities.
         <br />
         <br />
-        Additionally, we want to assure you that we will take care of your accommodation and food needs in a professional and efficient manner. We understand that these are important aspects of your travel experience and we want to ensure that you have a comfortable and enjoyable stay.
+        And that's not all – we're here to make this journey even more
+        accessible. We're excited to provide exclusive flight discounts, making
+        it easier for kids from all corners of Africa to reach our South African
+        bootcamps. We believe that talent knows no boundaries, and we're
+        committed to removing barriers to education.
+        <br />
+        <br />
+        Rest assured, we'll take care of your child's accommodation and
+        nutritional needs with the same level of professionalism and efficiency
+        that you expect. We understand that a comfortable and safe environment
+        is essential for a successful learning experience.
+        <br />
+        <br />
+        Thank you for choosing us to be a part of your child's educational
+        journey. We can't wait to embark on this coding adventure with kids from
+        Africa and help them shape a brighter future!
       </p>
     </div>
     <div>
@@ -55,7 +71,7 @@ export default {
         },
         {
           title: "2.<br>Browse",
-          description: "View all of our volunteer programs",
+          description: "View all of our coding programs",
           imageSrc: "https://i.postimg.cc/SscYSBTy/browsing-1.png",
           link: "/programs",
         },
@@ -118,7 +134,7 @@ body {
 .bg {
   width: 100%;
   object-fit: cover;
-      clip-path: inset(0 0 20% 0);
+  clip-path: inset(0 0 20% 0);
   /* height: 860px */
   /* height: 100vh; */
 }
@@ -174,13 +190,7 @@ h3 {
 
 /* @media screen and (max-width: 300px) { */
 
-  
 @media only screen and (max-width: 600px) {
-  .bg {
-    /* clip-path: inset(0 0 30% 0); */
-  }
+
 }
-
-
-
 </style>

@@ -34,7 +34,7 @@ class User {
       } else {
         // If a user was found, compare the password hash with the one in the database
         await bcrypt.compare(
-            UserPassword,
+          UserPassword,
           data[0].UserPassword,
           async (cErr, cResult) => {
             if (cErr) throw cErr;
@@ -174,10 +174,6 @@ class User {
   }
 }
 
-
-
-
-
 // -------------------------------------------A class for handling programs-related operations-------------------------------------------------
 class Program {
   // Fetch all products
@@ -255,164 +251,141 @@ class Program {
   }
 }
 
-
-
-
-
 // -------------------------------------------A class for handling flights-related operations-------------------------------------------------
 class Flights {
-    // Fetch all products
-    retrieveFlights(req, res) {
-      const loginQRY = `SELECT ID, DepartureCity, DepartureDate, DepartureTime, ArrivalCity, ArrivalDate, ArrivalTime, Price
+  // Fetch all products
+  retrieveFlights(req, res) {
+    const loginQRY = `SELECT ID, DepartureCity, DepartureDate, DepartureTime, ArrivalCity, ArrivalDate, ArrivalTime, Price
           FROM Flights;`;
-      // Run the SQL query
-      database.query(loginQRY, (err, results) => {
-        if (err) throw err;
-        // Return the query results
-        res.status(200).json({ results: results });
-      });
-    }
-    // Fetch a specific product using the product id
-    retrieveFlight(req, res) {
-      const loginQRY = `SELECT ID, DepartureCity, DepartureDate, DepartureTime, ArrivalCity, ArrivalDate, ArrivalTime, Price
+    // Run the SQL query
+    database.query(loginQRY, (err, results) => {
+      if (err) throw err;
+      // Return the query results
+      res.status(200).json({ results: results });
+    });
+  }
+  // Fetch a specific product using the product id
+  retrieveFlight(req, res) {
+    const loginQRY = `SELECT ID, DepartureCity, DepartureDate, DepartureTime, ArrivalCity, ArrivalDate, ArrivalTime, Price
       FROM Flights
           WHERE ID = ?;`;
-      // Run the SQL query with a parameterized query
-      database.query(loginQRY, [req.params.id], (err, results) => {
-        if (err) throw err;
-        // Return the query results
-        res.status(200).json({ results: results });
-      });
-    }
-    // Add a new product
-    addFlight(req, res) {
-      const loginQRY = `
+    // Run the SQL query with a parameterized query
+    database.query(loginQRY, [req.params.id], (err, results) => {
+      if (err) throw err;
+      // Return the query results
+      res.status(200).json({ results: results });
+    });
+  }
+  // Add a new product
+  addFlight(req, res) {
+    const loginQRY = `
           INSERT INTO Flights
           SET ?;
           `;
-      // Run the SQL query with the request body as the data
-      database.query(loginQRY, [req.body], (err) => {
-        if (err) {
-          // Return an error if the query fails
-          res.status(400).json({ err: "Unable to insert a new record." });
-        } else {
-          // Return a success message if the query succeeds
-          res.status(200).json({ msg: "Flights saved" });
-        }
-      });
-    }
-    // Update an existing product using the product id
-    updateFlight(req, res) {
-      const loginQRY = `
+    // Run the SQL query with the request body as the data
+    database.query(loginQRY, [req.body], (err) => {
+      if (err) {
+        // Return an error if the query fails
+        res.status(400).json({ err: "Unable to insert a new record." });
+      } else {
+        // Return a success message if the query succeeds
+        res.status(200).json({ msg: "Flights saved" });
+      }
+    });
+  }
+  // Update an existing product using the product id
+  updateFlight(req, res) {
+    const loginQRY = `
           UPDATE Flights
           SET ?
           WHERE ID = ?
           `;
-      // Run the SQL query with the request body and product id as parameters
-      database.query(loginQRY, [req.body, req.params.id], (err) => {
-        if (err) {
-          // Return an error if the query fails
-          res.status(400).json({ err: "Unable to update a record." });
-        } else {
-          // Return a success message if the query succeeds
-          res.status(200).json({ msg: "Flights updated" });
-        }
-      });
-    }
-    // Delete an existing product using the product id
-    deleteFlight(req, res) {
-      const loginQRY = `
+    // Run the SQL query with the request body and product id as parameters
+    database.query(loginQRY, [req.body, req.params.id], (err) => {
+      if (err) {
+        // Return an error if the query fails
+        res.status(400).json({ err: "Unable to update a record." });
+      } else {
+        // Return a success message if the query succeeds
+        res.status(200).json({ msg: "Flights updated" });
+      }
+    });
+  }
+  // Delete an existing product using the product id
+  deleteFlight(req, res) {
+    const loginQRY = `
           DELETE FROM Flights
           WHERE ID = ?;
           `;
-      // Run the SQL query with the product id as a parameter
-      database.query(loginQRY, [req.params.id], (err) => {
-        if (err) res.status(400).json({ err: "The record was not found." });
-        // Return a success message if the query succeeds
-        res.status(200).json({ msg: "Flight was deleted." });
-      });
-    }
+    // Run the SQL query with the product id as a parameter
+    database.query(loginQRY, [req.params.id], (err) => {
+      if (err) res.status(400).json({ err: "The record was not found." });
+      // Return a success message if the query succeeds
+      res.status(200).json({ msg: "Flight was deleted." });
+    });
   }
+}
 
+// -----------------------------------------CART---------------------------------------------------------------
 
-
-  // -----------------------------------------CART---------------------------------------------------------------
-
-
-
-  class Bookings {
-    retrieveBookings(req, res) {
-        const loginQRY = `SELECT UserID, DepartureCity, DepartureDate, DepartureTime, ArrivalCity, ArrivalDate, ArrivalTime, Price
+class Bookings {
+  retrieveBookings(req, res) {
+    const loginQRY = `SELECT UserID, DepartureCity, DepartureDate, DepartureTime, ArrivalCity, ArrivalDate, ArrivalTime, Price
         FROM Bookings
         INNER JOIN Flights ON Bookings.ID = Flights.ID=${req.params.id};`;
 
-        database.query(loginQRY,(err, data) =>{
-            if(err){
-                console.log(err);
-                res.status(400).json({err: "The Cart is empty"});
-            } 
-            else res.status(200).json({results: data})
-        })
-    }
+    database.query(loginQRY, (err, data) => {
+      if (err) {
+        console.log(err);
+        res.status(400).json({ err: "The Cart is empty" });
+      } else res.status(200).json({ results: data });
+    });
+  }
 
-    addBooking(req, res) {
-        const loginQRY = 
-        `
+  addBooking(req, res) {
+    const loginQRY = `
         INSERT INTO Bookings
         SET ?;
         `;
-        database.query(loginQRY,[req.body],
-            (err)=> {
-                if(err){
-                    res.status(400).json({err: "Could not add to the Booking"});
-                }else {
-                    res.status(200).json({message: "Added to the Booking"});
-                }
-            }
-        );   
-    }
+    database.query(loginQRY, [req.body], (err) => {
+      if (err) {
+        res.status(400).json({ err: "Could not add to the Booking" });
+      } else {
+        res.status(200).json({ message: "Added to the Booking" });
+      }
+    });
+  }
 
-    deleteBooking(req, res) {
-        const loginQRY = 
-        `
+  deleteBooking(req, res) {
+    const loginQRY = `
         DELETE FROM Bookings
-        WHERE ID = ?; `
-        database.query(loginQRY,[req.params.id], (err)=> {
-            if(err) res.status(400).json({err: "The flight was not found."});
-            res.status(200).json({message: "A flight was deleted."});
-        })
-    }
+        WHERE ID = ?; `;
+    database.query(loginQRY, [req.params.id], (err) => {
+      if (err) res.status(400).json({ err: "The flight was not found." });
+      res.status(200).json({ message: "A flight was deleted." });
+    });
+  }
 
-    updateBooking(req, res) {
-        const loginQRY = 
-        `
+  updateBooking(req, res) {
+    const loginQRY = `
         UPDATE Bookings
         SET ?
         WHERE ID = ?
         `;
-        database.query(loginQRY,[req.body, req.params.id],
-            (err)=> {
-                if(err){
-                    res.status(400).json({err: "Unable to update a record."});
-                }else {
-                    res.status(200).json({message: "Flight updated"});
-                }
-            }
-        );    
-
-    }
-
+    database.query(loginQRY, [req.body, req.params.id], (err) => {
+      if (err) {
+        res.status(400).json({ err: "Unable to update a record." });
+      } else {
+        res.status(200).json({ message: "Flight updated" });
+      }
+    });
+  }
 }
-
-
-
-
-
 
 // Export the user and product class
 module.exports = {
   User,
   Program,
   Flights,
-  Bookings
+  Bookings,
 };

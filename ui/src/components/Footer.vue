@@ -2,26 +2,24 @@
   <footer class="footer">
     <div class="container">
       <div class="row">
-        <!-- <div class="col-md-4">
-          <h4>About Us</h4>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod euismod nisi, in posuere libero pulvinar eu.</p>
-        </div> -->
         <div class="col-md-6">
-          <h4><i class="fa-solid fa-phone" style="color: #ffffff;"></i>Contact Us</h4>
-          <p>125 Main Road <br> Cape Town, South Africa <br> Email: info@volunteerventures.com <br> Phone: (021) 703-7890</p>
+          <h4>Contact</h4>
+          <p>
+            Thabang Kganana<br>
+            Junior Software Engineer<br>
+            Cape Town, Western Cape, South Africa
+          </p>
         </div>
         <div class="col-md-6">
           <h4>Follow Us</h4>
           <div class="container-fluid d-flex justify-content-center">
-        <a class="footer-link" target="_blank" href="https://github.com/JavierGoodall99/VolunteerVentures"><i class="fa-brands fa-github"></i>GitHub</a>
-        <a class="footer-link" target="_blank" href="https://www.linkedin.com/in/javier-goodall-b13644233/"><i class="fa-brands fa-linkedin"></i>LinkedIn</a>
-        <a class="footer-link" target="_blank" href="https://www.facebook.com/profile.php?id=100003196084155"><i class="fa-brands fa-facebook"></i>Facebook</a>
-        <a class="footer-link" target="_blank" href="https://www.instagram.com/javiergoodall/"><i class="fa-brands fa-instagram"></i>Instagram</a>
-      </div>
+            <a class="footer-link" target="_blank" href="https://github.com/Thabangx10/BookingAir"><i class="fa-brands fa-github"></i>GitHub</a>
+            <a class="footer-link" target="_blank" href="https://www.linkedin.com/in/thabangkganana/"><i class="fa-brands fa-linkedin"></i>LinkedIn</a>
+          </div>
         </div>
       </div>
       <hr>
-      <p class="text-center">Copyright © 2023 Volunteer Ventures</p>
+      <p class="text-center">Copyright © 2023 BookingAir</p>
     </div>
   </footer>
 </template>

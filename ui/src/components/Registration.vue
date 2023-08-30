@@ -188,7 +188,7 @@ h1 {
 }
 
 .image1 {
-  background-image: url("https://i.postimg.cc/nr5WKdH0/pexels-kirill-ozerov-9620528.jpg");
+  background-image: url("https://i.postimg.cc/fLKY0kp4/ideogram1.jpg");
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
