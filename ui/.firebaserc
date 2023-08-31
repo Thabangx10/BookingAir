@@ -1,8 +1,6 @@
+
 {
-  "projects": {
-    "default": "lcacapstone",
-    "frontend": "lcacapstone-ff9bd"
-  },
-  "targets": {},
-  "etags": {}
+  "hosting": {
+    "site": "lcacapstone-ff9bd",
+  }
 }
