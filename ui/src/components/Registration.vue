@@ -309,5 +309,3 @@ span a:hover {
   }
 }
 </style>
-
-<!-- https://www.divinectorweb.com/2023/02/login-and-signup-form-switch-javascript.html -->
