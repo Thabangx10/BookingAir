@@ -7,12 +7,7 @@ const bodyParser = require("body-parser");
 // Create an express router
 const route = express.Router();
 // Import the User, Program, flights models
-const { User, Program, Flights, Bookings } = require("../model");
-// Create instances of the User, Program, flights models
-const user = new User();
-const program = new Program();
-const flights = new Flights();
-const booking = new Bookings();
+const { User, Program, Flights, Bookings } = require("../model"); // Make sure your model exports are correctly named
 
 // Set up the route for the homepage
 // This route matches either the root URL or /VolunteerVentures
@@ -22,7 +17,7 @@ route.get("^/$|/BookingAir", (req, res) => {
 });
 
 // Set up the routes for the user endpoints
-
+const user = new User(); // Create an instance of the User class
 
 // ------------------------------Login route-------------------------------------------
 route.post("/login", bodyParser.json(), (req, res) => {
@@ -49,12 +44,10 @@ route.delete("/user/:id", (req, res) => {
   user.deleteUser(req, res);
 });
 
-
-
-
 // Set up the routes for the program endpoints
-// ------------------------------Volunteer Programs route-------------------------------------------
+const program = new Program(); // Create an instance of the Program class
 
+// ------------------------------Coding Programs route-------------------------------------------
 route.get("/programs", (req, res) => {
   program.retrievePrograms(req, res);
 });
@@ -64,43 +57,47 @@ route.get("/program/:id", (req, res) => {
 });
 // Create program route
 route.post("/program", bodyParser.json(), (req, res) => {
-    program.addProgram(req, res);
+  program.addProgram(req, res);
 });
 // Update program route
 route.put("/program/:id", bodyParser.json(), (req, res) => {
-    program.updateProgram(req, res);
+  program.updateProgram(req, res);
 });
 // Delete program route
 route.delete("/program/:id", (req, res) => {
-    program.deleteProgram(req, res);
+  program.deleteProgram(req, res);
 });
 
+// Set up the routes for the flights endpoints
+const flights = new Flights(); // Create an instance of the Flights class
 
 // ------------------------------Flights route-------------------------------------------
 route.get("/flights", (req, res) => {
-    flights.retrieveFlights(req, res);
-  });
-  // Fetch single flights route
-  route.get("/flight/:id", (req, res) => {
-    flights.retrieveFlight(req, res);
-  });
-  // Create flights route
-  route.post("/flight", bodyParser.json(), (req, res) => {
-    flights.addFlight(req, res);
-  });
-  // Update flights route
-  route.put("/flight/:id", bodyParser.json(), (req, res) => {
-    flights.updateFlight(req, res);
-  });
-  // Delete flights route
-  route.delete("/flight/:id", (req, res) => {
-    flights.deleteFlight(req, res);
-  });
+  flights.retrieveFlights(req, res);
+});
+// Fetch single flight route
+route.get("/flight/:id", (req, res) => {
+  flights.retrieveFlight(req, res);
+});
+// Create flight route
+route.post("/flight", bodyParser.json(), (req, res) => {
+  flights.addFlight(req, res);
+});
+// Update flight route
+route.put("/flight/:id", bodyParser.json(), (req, res) => {
+  flights.updateFlight(req, res);
+});
+// Delete flight route
+route.delete("/flight/:id", (req, res) => {
+  flights.deleteFlight(req, res);
+});
 
+// Set up the routes for the bookings endpoints
+const booking = new Bookings(); // Create an instance of the Bookings class
 
 // ----------------------------------------------Bookings---------------------------------------------
 
-// Retrieve all bookings
+// Retrieve all bookings for a specific user
 route.get("/user/:id/bookings", (req, res) => {
   booking.retrieveBookings(req, res);
 });
@@ -109,18 +106,14 @@ route.get("/user/:id/bookings", (req, res) => {
 route.post("/user/:id/booking", bodyParser.json(), (req, res) => {
   booking.addBooking(req, res);
 });
-// Update bookings route
+// Update booking route
 route.put("/user/:id/booking/:id", bodyParser.json(), (req, res) => {
   booking.updateBooking(req, res);
 });
 // Delete booking route
-route.delete("/user/:id/booking", (req, res) => {
+route.delete("/user/:id/booking/:id", (req, res) => {
   booking.deleteBooking(req, res);
 });
-
-
-
-
 
 // Export the router
 module.exports = route;
