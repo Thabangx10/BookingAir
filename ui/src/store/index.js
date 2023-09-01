@@ -4,10 +4,10 @@ const bStoreURL = 'https://campreserve.onrender.com/'
 
 export default createStore({
   state: {
-    user: null,
+    // user: null,
     message: null,
     loading: false,
-    // user: [],
+    user: [],
     users: [],
     programs: [],
     flights: [],
