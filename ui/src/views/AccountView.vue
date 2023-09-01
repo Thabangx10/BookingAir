@@ -2,35 +2,38 @@
   <body class="bg">
     <div class="container">
       <div class="info">
-        <h2>User Information</h2>
-        <p>Name : {{ user.FirstName }}</p>
-        <p>Surname : {{ user.LastName }}</p>
-        <p>PhoneNumber : {{ user.PhoneNumber }}</p>
-        <p>Email : {{ user.Email }}</p>
-        <p>Address : {{ user.Address }}</p>
-        <p>User Role : {{ user.userRole }}</p>
+          <div v-if="user">
+            <h2>User Information</h2>
+            <p>Name : {{ user.FirstName }}</p>
+            <p>Surname : {{ user.LastName }}</p>
+            <p>PhoneNumber : {{ user.PhoneNumber }}</p>
+            <p>Email : {{ user.Email }}</p>
+            <p>Address : {{ user.Address }}</p>
+            <p>User Role : {{ user.userRole }}</p>
+          </div>
       </div>
-    </div> 
+    </div>
   </body>
 </template>
 
 <script>
 export default {
-  name: 'User Account',
+  name: "User Account",
   data() {
     return {
-      FirstName: '',
-      LastName: '',
-      PhoneNumber: '',
-      Email: '',
-      Address: '',
-      userRole: '',
-    }
+      FirstName: "",
+      LastName: "",
+      PhoneNumber: "",
+      Email: "",
+      Address: "",
+      userRole: "",
+    };
   },
 
   methods: {
     updateUser: function (user) {
-      return this.$store.dispatch('updateUser', {
+      return this.$store
+        .dispatch("updateUser", {
           userID: user.userID,
           FirstName: user.FirstName,
           LastName: user.LastName,
@@ -57,23 +60,26 @@ export default {
   },
 
   created() {
-    this.$store.dispatch('retrieveUser');
+    this.$store.dispatch("retrieveUser");
   },
 };
 </script>
 
-
 <style scoped>
 .bg {
-    background: radial-gradient(circle, rgba(248, 248, 248, 1) 0%, rgb(193, 210, 232) 100%);
-    font-family: 'Black Mango Medium';
-    font-size: 17px;
-    color: rgb(27, 61, 102);
-    font-weight: bold;
-    letter-spacing: 0.1rem;
-    word-spacing: 0.2rem;
-    line-height: 40px;
-    height: 100vh;
+  background: radial-gradient(
+    circle,
+    rgba(248, 248, 248, 1) 0%,
+    rgb(193, 210, 232) 100%
+  );
+  font-family: "Black Mango Medium";
+  font-size: 17px;
+  color: rgb(27, 61, 102);
+  font-weight: bold;
+  letter-spacing: 0.1rem;
+  word-spacing: 0.2rem;
+  line-height: 40px;
+  height: 100vh;
 }
 .container {
   max-width: 800px;
@@ -88,7 +94,6 @@ export default {
   flex-direction: column;
   align-items: center;
   margin-top: 1rem;
-;
 }
 
 h2 {
@@ -116,5 +121,4 @@ div[v-else] p {
   margin-top: 1rem;
   text-align: center;
 }
-
 </style>

@@ -8,7 +8,7 @@ const route = require('./controller');
 const cors = require('cors');
 
 // Set the server port
-const port = parseInt(process.env.PORT) || 4000;
+const port = parseInt(process.env.PORT) || 8080;
 
 // Create a new express app
 const app = express();
@@ -21,7 +21,9 @@ app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*')
   res.header("Access-Control-Allow-Credentials", "true")
   res.header("Access-Control-Allow-Methods", "*")
+  res.header("Access-Control-Request-Methods", "*")
   res.header("Access-Control-Allow-Headers", "*")
+  res.header("Access-Control-Expose-Headers", "Authorization")
   next();
 });
 
