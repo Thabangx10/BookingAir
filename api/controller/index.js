@@ -32,7 +32,7 @@ route.get("/user/:id", (req, res) => {
   user.retrieveUser(req, res);
 });
 // Update user route
-route.put("/user/:id", bodyParser.json(), (req, res) => {
+route.patch("/user/:id", bodyParser.json(), (req, res) => {
   user.updateUser(req, res);
 });
 // Create user route
