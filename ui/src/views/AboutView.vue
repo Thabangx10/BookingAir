@@ -22,32 +22,31 @@
             updates!
           </p>
         </div>
+      </div>
 
-        <div class="row py-5">
-          <div class="col-md-6">
-            <h2>Our Services</h2>
-            <ul>
-              <li>
-                <b>-</b> Exciting coding bootcamp programs tailored for young
-                explorers
-              </li>
-              <li><b>-</b> Comprehensive in-country support and guidance</li>
-              <li>
-                <b>-</b> User-friendly flight booking system with exclusive
-                discounts
-              </li>
-              <li>
-                <b>-</b> Expert advice and unwavering support for both young
-                coders and their parents
-              </li>
-              <li>
-                <b>-</b> Opportunities for language learning and skill
-                development in a fun and educational environment
-              </li>
-            </ul>
-          </div>
+      <div class="row py-5">
+        <div class="col-md-6">
+          <h2>Our Services</h2>
+          <ul>
+            <li>
+              <b>-</b> Exciting coding bootcamp programs tailored for young
+              explorers
+            </li>
+            <li><b>-</b> Comprehensive in-country support and guidance</li>
+            <li>
+              <b>-</b> User-friendly flight booking system with exclusive
+              discounts
+            </li>
+            <li>
+              <b>-</b> Expert advice and unwavering support for both young
+              coders and their parents
+            </li>
+            <li>
+              <b>-</b> Opportunities for language learning and skill development
+              in a fun and educational environment
+            </li>
+          </ul>
         </div>
-
         <div class="col-md-6">
           <img
             src="https://i.postimg.cc/pTGrQxL1/coding-SA.jpg"
@@ -56,54 +55,24 @@
           />
         </div>
       </div>
-    </div>
 
-    <div class="row py-5">
-      <div class="col-md-6">
-        <img
-          src="https://i.postimg.cc/Qtr3wdfy/poor.jpg"
-          alt="African coding destination"
-          class="w-100"
-        />
-      </div>
-      <div class="col-md-6">
-        <h2>Our Impact</h2>
-        <p>
-          Since our launch, we've witnessed the transformational power of
-          education and skill development for young minds in Africa. Through our
-          coding bootcamps and upskilling initiatives, we are not just shaping
-          the future; we're creating it.
-        </p>
-
-        <p>
-          By providing access to coding education and technology-driven
-          opportunities, we are nurturing the next generation of innovators,
-          problem-solvers, and leaders. These young minds are not only learning
-          to code; they're learning to think critically, creatively, and
-          globally.
-        </p>
-
-        <p>
-          Our impact extends far beyond the classroom. As we empower kids in
-          Africa with coding skills, we're opening doors to countless
-          possibilities. These skills are not only about building websites and
-          apps; they're about building brighter futures and breaking down
-          barriers.
-        </p>
-
-        <p>
-          Through our booking application, we're not just facilitating travel;
-          we're catalyzing change. We envision a future where young and
-          explorative minds from Africa become the architects of technological
-          advancements, the champions of innovation, and the leaders of positive
-          transformation in their communities and beyond.
-        </p>
-
-        <p>
-          Together, we're not just making a difference; we're shaping a future
-          where every child's potential is unlocked, and where the possibilities
-          are as limitless as their dreams.
-        </p>
+      <div class="row py-5">
+        <div class="col-md-6">
+          <img
+            src="https://i.postimg.cc/Qtr3wdfy/poor.jpg"
+            alt="African coding destination"
+            class="w-100"
+          />
+        </div>
+        <div class="col-md-6">
+          <h2>Our Impact</h2>
+          <p>
+            Since our launch, we've witnessed the transformational power of
+            education and skill development for young minds in Africa. Through
+            our coding bootcamps and upskilling initiatives, we are not just
+            shaping the future; we're creating it.
+          </p>
+        </div>
       </div>
     </div>
   </body>

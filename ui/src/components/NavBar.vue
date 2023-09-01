@@ -2,7 +2,7 @@
   <nav class="navbar navbar-expand-lg">
     <div class="container-fluid">
       <a class="navbar-brand" href="/">
-        <h3>CampReserve</h3>
+        <h3 id="storeName">CampReserve</h3>
       </a>
       <!-- To make the navbar close because it was not working normally -->
       <button class="navbar-toggler" type="button" @click="toggleNav">
@@ -136,6 +136,12 @@ export default {
 <style scoped>
 
 /* Navbar Container */
+
+/* NavBar */
+#storeName {
+  color: rgb(255, 255, 255);
+}
+
 .navbar {
   background-color: rgb(27, 61, 102); /* Background color for the navbar */
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Add a subtle shadow */

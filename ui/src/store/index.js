@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { createStore } from 'vuex'
-const bStoreURL = 'https://volunteerventures.onrender.com/'
+const bStoreURL = 'https://campreserve.onrender.com/'
 
 export default createStore({
   state: {
@@ -20,7 +20,7 @@ export default createStore({
       state.bookedFlights.push(flight);
     },
     setBookedFlight(state, flight) {
-      state.bookedFlight = flight;
+      state.bookedFlights = flight;
     },
     addToCart(state, flight) {
       state.cart.push(flight);
@@ -28,10 +28,6 @@ export default createStore({
     removeFromCart(state, flight) {
       state.cart = state.cart.filter(f => f !== flight);
     },
-    
-    // removeFlight(state, index) {
-    //   state.bookedFlights.splice(index, 1);
-    // },
     setLoading(state, loading) {
       state.loading = loading
     },
@@ -95,9 +91,6 @@ export default createStore({
     setFlights (state, flights) {
       state.flights = flights;
     },
-    // setFlight (state, flight) {
-    //   state.flight = flight;
-    // },
     addFlight(state, flights) {
       state.flights = flights;
     },
@@ -117,12 +110,6 @@ export default createStore({
 
     // ------------------------------------------REGISTER/LOGIN-----------------------------------------------------
     actions: {
-      // removeFlight({ commit, state }, flight) {
-      //   const index = state.bookedFlights.indexOf(flight);
-      //   if (index !== -1) {
-      //     commit('removeFlight', index);
-      //   }
-      // },
     async register (context, payload) {
       console.log(payload);
       const res = await axios.post(`${bStoreURL}register`, payload)
