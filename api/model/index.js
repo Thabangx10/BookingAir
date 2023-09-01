@@ -127,40 +127,40 @@ async retrieveUser(req, res) {
   async register(req, res) {
     try {
       const data = req.body;
-
-      // Ensure data.userPass is a valid string and meets password criteria
+  
+      // Ensure data.UserPassword is a valid string and meets password criteria
       const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-
-      if (!passwordRegex.test(data.userPass)) {
+  
+      if (!passwordRegex.test(data.UserPassword)) {
         return res.status(400).json({
           status: 400,
           msg: 'Invalid password. It must contain at least 8 characters, including one uppercase letter, one lowercase letter, one number, and one special character.',
         });
       }
-
+  
       // Generate a salt
       const saltRounds = 15;
       const salt = await bcrypt.genSalt(saltRounds);
-
+  
       // Encrypt the password using the generated salt
-      const hashedPassword = await bcrypt.hash(data.userPass, salt);
-
+      const hashedPassword = await bcrypt.hash(data.UserPassword, salt);
+  
       // Create a user object with email and hashed password
       const user = {
         Email: data.Email,
         UserPassword: hashedPassword,
       };
-
+  
       // Insert the user data into the database
       const query = `
         INSERT INTO Users
         SET ?;
       `;
       await database.query(query, user);
-
+  
       // Create a token for the registered user
       const token = createToken(user);
-
+  
       res.status(201).json({
         status: 201,
         msg: "You are now registered.",
@@ -173,7 +173,7 @@ async retrieveUser(req, res) {
         msg: "Registration failed.",
       });
     }
-  }
+  }  
 
   // Method to update user information
   async updateUser(req, res) {
