@@ -1,6 +1,8 @@
-
 {
   "hosting": {
     "site": ""
+  },
+  "projects": {
+    "default": "lcacapstone-ff9bd"
   }
 }
