@@ -65,58 +65,64 @@ class User {
     }
   }
 
-  // Method to retrieve all users
-  async retrieveUsers(req, res) {
-    try {
-      // SQL query to select all users
-      const loginQRY = `
-        SELECT ID, FirstName, LastName, Email, Address, PhoneNumber, userRole
-        FROM Users;
-      `;
+// Method to retrieve all users
+async retrieveUsers(req, res) {
+  try {
+    // SQL query to select all users
+    const loginQRY = `
+      SELECT ID, FirstName, LastName, Email, Address, PhoneNumber, userRole
+      FROM Users;
+    `;
 
-      // Execute the query to retrieve all users
-      const [rows] = await database.query(loginQRY);
+    // Execute the query to retrieve all users
+    const [rows] = await database.query(loginQRY);
 
-      // Return the retrieved user data to the client
-      return res.status(200).json({ results: rows });
-    } catch (err) {
-      console.error(err);
-      res.status(500).json({
-        err: "An error occurred while retrieving users.",
+    // Check if there are no users
+    if (!rows.length) {
+      return res.status(404).json({
+        err: "No users found",
       });
     }
+
+    // Return the retrieved user data to the client
+    return res.status(200).json({ results: rows });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({
+      err: "An error occurred while retrieving users.",
+    });
   }
+}
 
-  // Method to retrieve user information by ID
-  async retrieveUser(req, res) {
-    try {
-      // SQL query to select user information by ID
-      const loginQRY = `
-        SELECT ID, FirstName, LastName, Email, Address, PhoneNumber, userRole
-        FROM Users
-        WHERE ID = ?;
-      `;
+// Method to retrieve user information by ID
+async retrieveUser(req, res) {
+  try {
+    // SQL query to select user information by ID
+    const loginQRY = `
+      SELECT ID, FirstName, LastName, Email, Address, PhoneNumber, userRole
+      FROM Users
+      WHERE ID = ?;
+    `;
 
-      // Execute the query with the user ID as a parameter
-      const [rows] = await database.query(loginQRY, [req.params.id]);
+    // Execute the query with the user ID as a parameter
+    const [rows] = await database.query(loginQRY, [req.params.id]);
 
-      if (!rows.length) {
-        // If no user was found with the given ID, return an error
-        return res.status(404).json({
-          err: "User not found",
-        });
-      }
-
-      // Return the user information as a JSON object
-      return res.status(200).json({ results: rows });
-    } catch (err) {
-      console.error(err);
-      res.status(500).json({
-        err: "An error occurred while retrieving user information.",
+    if (!rows.length) {
+      // If no user was found with the given ID, return a 404 status code
+      return res.status(404).json({
+        err: "User not found",
       });
     }
-  }
 
+    // Return the user information as a JSON object
+    return res.status(200).json({ results: rows });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({
+      err: "An error occurred while retrieving user information.",
+    });
+  }
+}
   // Method to register a new user
   async register(req, res) {
     try {
