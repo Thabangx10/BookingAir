@@ -2,12 +2,14 @@
 const database = require("../config");
 
 // bcrypt module
+const { hash, compare, hashSync } = require("bcrypt");
+
 const bcrypt = require("bcrypt");
 
 // Middleware for creating a token
 const { createToken } = require("../middleware/AuthenticatedUser");
 
-// User  
+// User
 class User {
   // This method is responsible for authenticating a user
   SignIn(req, res) {
