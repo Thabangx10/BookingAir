@@ -7,7 +7,12 @@ const bodyParser = require("body-parser");
 // Create an express router
 const route = express.Router();
 // Import the User, Program, flights models
-const { user, program, flights, booking } = require("../model");
+const { User, Program, Flights, Bookings } = require("../model");
+// Create instances of the User, Program, flights models
+const user = new User();
+const program = new Program();
+const flights = new Flights();
+const booking = new Bookings();
 
 // Set up the route for the homepage
 // This route matches either the root URL or /VolunteerVentures
@@ -118,5 +123,4 @@ route.delete("/user/:id/booking", (req, res) => {
 
 
 // Export the router
-module.exports = route
-
+module.exports = route;
