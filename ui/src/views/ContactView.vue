@@ -6,7 +6,7 @@
               <h2 class="font-weight-bold text-center  mb-5 animate__animated animate__zoomIn">Contact Us</h2>
               <div class="card shadow-lg">
               <div class="card-body">
-                <form action="https://formspree.io/f/xpzerlyo" method="post">
+                <form action="https://formspree.io/f/mjvdladp" method="post">
                   <div class="form-group">
                     <label for="firstName" class="text-black">First Name</label>
                     <input type="text" class="form-control" id="firstName" placeholder="Enter your first name" name="firstName" required>
