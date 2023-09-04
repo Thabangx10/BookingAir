@@ -9,6 +9,7 @@
       <p>Address: {{ user.Address }}</p>
       <p>User Role: {{ user.userRole }}</p>
     </div>
+    <!-- checking booked logic for user flights -->
     <div v-else>
       <p>No user information available</p>
     </div>
