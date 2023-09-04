@@ -12,7 +12,7 @@ export default createStore({
     programs: [],
     flights: [],
     bookedFlights: [],
-    
+
   },
   mutations: {
 
@@ -31,14 +31,14 @@ export default createStore({
     setLoading(state, loading) {
       state.loading = loading
     },
-    setUser (state, payload) {
+    setUser(state, payload) {
       state.user = payload
     },
-    setMessage (state, payload) {
+    setMessage(state, payload) {
       state.message = payload
     },
 
-// --------------------------Booking----------------------------------
+    // --------------------------Booking----------------------------------
     setBooking(state, value) {
       state.booking = value
     },
@@ -46,7 +46,7 @@ export default createStore({
       state.bookings = values
     },
     // ---------------------User---------------------------------------
-    setUsers (state, users) {
+    setUsers(state, users) {
       state.users = users;
     },
     addUser(state, users) {
@@ -65,10 +65,10 @@ export default createStore({
     },
 
     // --------------------------------Program----------------------------------
-    setPrograms (state, programs) {
+    setPrograms(state, programs) {
       state.programs = programs;
     },
-    setProgram (state, program) {
+    setProgram(state, program) {
       state.program = program;
     },
     addProgram(state, programs) {
@@ -88,7 +88,7 @@ export default createStore({
 
 
     // --------------------------FLIGHTS----------------------------------------------
-    setFlights (state, flights) {
+    setFlights(state, flights) {
       state.flights = flights;
     },
     addFlight(state, flights) {
@@ -108,9 +108,9 @@ export default createStore({
   },
 
 
-    // ------------------------------------------REGISTER/LOGIN-----------------------------------------------------
-    actions: {
-    async register (context, payload) {
+  // ------------------------------------------REGISTER/LOGIN-----------------------------------------------------
+  actions: {
+    async register(context, payload) {
       console.log(payload);
       const res = await axios.post(`${bStoreURL}register`, payload)
       const { result, err, msg } = await res.data
@@ -122,96 +122,110 @@ export default createStore({
       }
     },
 
-  async login (context, payload) {
-    console.log(payload);
-    const res = await axios.post(`${bStoreURL}login`, payload)
-    const { result, err, msg } = await res.data
-    if (result) {
-      context.commit('setUser', result)
-      localStorage.setItem("user", JSON.stringify(result))
-      context.commit('setMessage', msg)
-    } else {
-      context.commit('setMessage', err)
-    }
-    context.commit('setLoading', false);
-  },
-
-  // --------------------------------------------USERS--------------------------------------------------------------
-  async retrieveUsers(context) {
-    const res = await axios.get(`${bStoreURL}users`);
-    const { results, err, msg } = await res.data;
-    if(results) {
-      context.commit('setUsers', results)
-    }else {
-      context.commit('setMessage', err || msg)
-    }
-  },
-  async retrieveUser(context, id) {
-    const res = await axios.get(`${bStoreURL}user/${id}`);
-    const { results } = await res.data;
-    if(results) {
-      console.log(results[0])
-      context.commit('setUser', results[0]);
-    }
-  },
-  // async addUser(context, payload) {
-  //   const res = await axios.post(`${bStoreURL}register`, payload);
-  //   const { result, err, msg } = await res.data;
-  //   if (result) {
-  //     context.commit('updateUser', result);
-  //     context.commit('setMessage', msg)
-  //   } else {
-  //     context.commit('setMessage', err)
-  //   }
-  // },
-  async updateUser(context, payload) {
-    try {
-      const res = await axios.put(`${bStoreURL}user/${payload.ID}`, payload);
-      const { result, err, msg } = await res.data;
+    async login(context, payload) {
+      console.log(payload);
+      const res = await axios.post(`${bStoreURL}login`, payload)
+      const { result, err, msg } = await res.data
       if (result) {
-        context.commit('updateUser', result);
+        context.commit('setUser', result)
+        localStorage.setItem("user", JSON.stringify(result))
         context.commit('setMessage', msg)
       } else {
         context.commit('setMessage', err)
       }
-    } catch (error) {
-      console.error(error);
-      context.commit('setMessage', 'Error updating user');
-    }
-  },
-  
-  async deleteUser(context, id) {
-    try {
-      const res = await axios.delete(`${bStoreURL}user/${id}`);
-      const { err, msg } = await res.data;
-      if (msg) {
-        context.dispatch('retrieveUsers');
-        context.commit('setMessage', msg);
-        // window.location.reload(); 
+      context.commit('setLoading', false);
+    },
+
+    // --------------------------------------------USERS--------------------------------------------------------------
+    async retrieveUsers(context) {
+      const res = await axios.get(`${bStoreURL}users`);
+      const { results, err, msg } = await res.data;
+      if (results) {
+        context.commit('setUsers', results)
       } else {
-        context.commit('setMessage', err)
+        context.commit('setMessage', err || msg)
       }
-    } catch (err) {
-      context.commit('setMessage', err.message);
-    }
-  },
+    },
+
+    // Inside your Vuex store actions
+    async retrieveUser(context) {
+      // Retrieve the user ID from your state or other source
+      const userId = 1; // Replace with your actual user ID retrieval logic
+
+      try {
+        const res = await axios.get(`${bStoreURL}user/${userId}`);
+        const { results } = await res.data;
+        if (results && results.length > 0) {
+          // Assuming the user data is returned as an array, take the first item
+          const user = results[0];
+          context.commit('setUser', user);
+        } else {
+          context.commit('setUser', null); // Set user to null if no data is found
+        }
+      } catch (error) {
+        console.error(error);
+        context.commit('setUser', null); // Handle errors and set user to null
+      }
+    },
+
+    // async addUser(context, payload) {
+    //   const res = await axios.post(`${bStoreURL}register`, payload);
+    //   const { result, err, msg } = await res.data;
+    //   if (result) {
+    //     context.commit('updateUser', result);
+    //     context.commit('setMessage', msg)
+    //   } else {
+    //     context.commit('setMessage', err)
+    //   }
+    // },
+    async updateUser(context, payload) {
+      try {
+        const res = await axios.put(`${bStoreURL}user/${payload.ID}`, payload);
+        const { result, err, msg } = await res.data;
+        if (result) {
+          context.commit('updateUser', result);
+          context.commit('setMessage', msg)
+        } else {
+          context.commit('setMessage', err)
+        }
+      } catch (error) {
+        console.error(error);
+        context.commit('setMessage', 'Error updating user');
+      }
+    },
+
+    async deleteUser(context, id) {
+      try {
+        const res = await axios.delete(`${bStoreURL}user/${id}`);
+        const { err, msg } = await res.data;
+        if (msg) {
+          context.dispatch('retrieveUsers');
+          context.commit('setMessage', msg);
+          // window.location.reload(); 
+        } else {
+          context.commit('setMessage', err)
+        }
+      } catch (err) {
+        context.commit('setMessage', err.message);
+      }
+    },
 
 
 
-  // --------------------------------------------PROGRAMS------------------------------------------------------
-  async fetchPrograms(context) {
+    // --------------------------------------------PROGRAMS------------------------------------------------------
+    async fetchPrograms(context) {
       const res = await axios.get(`${bStoreURL}programs`);
       const { results, err, msg } = await res.data;
-      if(results) {
+      if (results) {
         context.commit('setPrograms', results)
-      }else {
+      } else {
         context.commit('setMessage', err || msg)
       }
     },
     async fetchProgram(context, id) {
       const res = await axios.get(`${bStoreURL}program/${id}`);
       const { results } = await res.data;
-      if(results) {
+      if (results) {
         console.log(results[0])
         context.commit('setProgram', results[0]);
       }
@@ -242,7 +256,7 @@ export default createStore({
         context.commit('setMessage', 'Error updating program');
       }
     },
-    
+
     async deleteProgram(context, id) {
       try {
         const res = await axios.delete(`${bStoreURL}program/${id}`);
@@ -262,130 +276,130 @@ export default createStore({
 
 
 
-  // ---------------------------------------------------FLIGHTS--------------------------------------------------
+    // ---------------------------------------------------FLIGHTS--------------------------------------------------
 
-  async fetchFlights(context) {
-    const res = await axios.get(`${bStoreURL}flights`);
-    const { results, err, msg } = await res.data;
-    if(results) {
-      context.commit('setFlights', results)
-    }else {
-      context.commit('setMessage', err || msg)
-    }
-  },
-  async fetchFlight(context, id) {
-    const res = await axios.get(`${bStoreURL}flight/${id}`);
-    const { results } = await res.data;
-    if(results) {
-      console.log(results[0])
-      context.commit('setFlights', results[0]);
-    }
-  },
-  async addFlight(context, payload) {
-    const res = await axios.post(`${bStoreURL}flight`, payload);
-    const { result, err, msg } = await res.data;
-    if (result) {
-      context.commit('updateFlight', result);
-      context.commit('setMessage', msg)
-    } else {
-      context.commit('setMessage', err)
-    }
-  },
-async updateFlight(context, payload) {
-  try {
-    console.log("Flight object: ", payload);
-    const res = await axios.put(`${bStoreURL}flight/${payload.ID}`, payload);
-    console.log("response - backend: ", res);
-    const { err, msg } = await res.data;
-    if (msg) {
-      context.dispatch('fetchFlights')
-      context.commit('setMessage', msg)
-    } else {
-      context.commit('setMessage', err)
-    }
-  } catch (error) {
-    console.error(error);
-    context.commit('setMessage', 'Error updating flight');
-  }
-},
-  
-  
-  async deleteFlight(context, id) {
-    try {
-      const res = await axios.delete(`${bStoreURL}flight/${id}`);
-      const { err, msg } = await res.data;
-      if (msg) {
-        context.dispatch('fetchFlights');
-        context.commit('setMessage', msg);
-        // window.location.reload(); 
+    async fetchFlights(context) {
+      const res = await axios.get(`${bStoreURL}flights`);
+      const { results, err, msg } = await res.data;
+      if (results) {
+        context.commit('setFlights', results)
+      } else {
+        context.commit('setMessage', err || msg)
+      }
+    },
+    async fetchFlight(context, id) {
+      const res = await axios.get(`${bStoreURL}flight/${id}`);
+      const { results } = await res.data;
+      if (results) {
+        console.log(results[0])
+        context.commit('setFlights', results[0]);
+      }
+    },
+    async addFlight(context, payload) {
+      const res = await axios.post(`${bStoreURL}flight`, payload);
+      const { result, err, msg } = await res.data;
+      if (result) {
+        context.commit('updateFlight', result);
+        context.commit('setMessage', msg)
       } else {
         context.commit('setMessage', err)
       }
-    } catch (err) {
-      context.commit('setMessage', err.message);
-    }
-  },
-
-
-
-  // ---------------------------------Bookings----------------------------------------------
-
-
- 
-  async bookFlight(context, payload){
-    try {
-      let statusCode  = null;
-      let message = null;
-
-      await axios.post(`${bStoreURL}user/${payload.ID}/booking`, payload)
-      .then((data)=> {
-        statusCode = data.status
- 
-        message = data
-      })
-      .then(()=>{
-          console.log('Response: ', statusCode);           
-          context.commit('setMessage', message.data.msg);
-      });
-    }
-    catch(err) {
-      context.commit('setMessage', err);
-    }
-  },
-
-
-  async updateBooking(context, payload){
-    try{
-      let res = await axios.put(`${bStoreURL}user/${payload.ID}/cart/${payload.ID}`, {
-        quantity: payload.quantity
-      });
-      let {msg} = res.data;
-      if (res) {
-        console.log('Message: ', msg);
-        context.commit('setMessage', msg);
+    },
+    async updateFlight(context, payload) {
+      try {
+        console.log("Flight object: ", payload);
+        const res = await axios.put(`${bStoreURL}flight/${payload.ID}`, payload);
+        console.log("response - backend: ", res);
+        const { err, msg } = await res.data;
+        if (msg) {
+          context.dispatch('fetchFlights')
+          context.commit('setMessage', msg)
+        } else {
+          context.commit('setMessage', err)
+        }
+      } catch (error) {
+        console.error(error);
+        context.commit('setMessage', 'Error updating flight');
       }
-    }
-    catch(err){
-      console.error(err);
-    }
+    },
+
+
+    async deleteFlight(context, id) {
+      try {
+        const res = await axios.delete(`${bStoreURL}flight/${id}`);
+        const { err, msg } = await res.data;
+        if (msg) {
+          context.dispatch('fetchFlights');
+          context.commit('setMessage', msg);
+          // window.location.reload(); 
+        } else {
+          context.commit('setMessage', err)
+        }
+      } catch (err) {
+        context.commit('setMessage', err.message);
+      }
+    },
+
+
+
+    // ---------------------------------Bookings----------------------------------------------
+
+
+
+    async bookFlight(context, payload) {
+      try {
+        let statusCode = null;
+        let message = null;
+
+        await axios.post(`${bStoreURL}user/${payload.ID}/booking`, payload)
+          .then((data) => {
+            statusCode = data.status
+
+            message = data
+          })
+          .then(() => {
+            console.log('Response: ', statusCode);
+            context.commit('setMessage', message.data.msg);
+          });
+      }
+      catch (err) {
+        context.commit('setMessage', err);
+      }
+    },
+
+
+    async updateBooking(context, payload) {
+      try {
+        let res = await axios.put(`${bStoreURL}user/${payload.ID}/cart/${payload.ID}`, {
+          quantity: payload.quantity
+        });
+        let { msg } = res.data;
+        if (res) {
+          console.log('Message: ', msg);
+          context.commit('setMessage', msg);
+        }
+      }
+      catch (err) {
+        console.error(err);
+      }
+    },
+
+    async retrieveBookings(context) {
+      let currentUser = JSON.parse(localStorage.getItem('user'));
+      try {
+        const res = await axios.get(`${bStoreURL}user/${currentUser?.ID}/bookings`);
+        context.commit('SetBooking', res.data.results);
+      } catch (err) {
+        console.error(err);
+      }
+    },
+
+
+
+
+
+
   },
-
-  async retrieveBookings(context) {
-    let currentUser = JSON.parse(localStorage.getItem('user'));
-    try {  
-      const res = await axios.get(`${bStoreURL}user/${currentUser?.ID}/bookings`);
-      context.commit('SetBooking', res.data.results);
-    } catch(err) {
-      console.error(err);
-    }
-  },
-
-
-
-
-
-
-},
 
   getters: {
     getUser: state => state.user,
@@ -410,7 +424,7 @@ async updateFlight(context, payload) {
       return total;
     },
   }
-  });
+});
 
 
 
