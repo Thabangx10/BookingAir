@@ -67,7 +67,7 @@ export default {
     },
   },
   methods: {
-    async login() {
+    async loginUser() {
       this.isLoading = true;
       const userData = {
         Email: this.email,
