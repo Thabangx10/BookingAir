@@ -204,6 +204,28 @@ export default createStore({
       }
     },
 
+    async retrieveUserFlights(context) {
+      const user = JSON.parse(localStorage.getItem('user'));
+      
+      if (user && user.ID) {
+        try {
+          const res = await axios.get(`${bStoreURL}user/${user.ID}/flights`);
+          const { results, err, msg } = await res.data;
+          
+          if (results) {
+            context.commit('setBookedFlight', results); 
+          } else {
+            context.commit('setMessage', err || msg);
+          }
+        } catch (err) {
+          console.error(err);
+          context.commit('setMessage', 'Error retrieving user flights');
+        }
+      } else {
+        context.commit('setMessage', 'User not logged in or ID not available.');
+      }
+    },
+
     async deleteUser(context, id) {
       try {
         const res = await axios.delete(`${bStoreURL}user/${id}`);
