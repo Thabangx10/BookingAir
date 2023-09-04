@@ -22,10 +22,6 @@ export default {
     user: function () {
       return this.$store.state.user;
     }
-  },
-  created() {
-    // Fetch the user information when the component is created.
-    this.$store.dispatch("retrieveUser");
   }
 };
 </script>

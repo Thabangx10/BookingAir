@@ -129,6 +129,7 @@ export default createStore({
       if (result) {
         context.commit('setUser', result)
         localStorage.setItem("user", JSON.stringify(result))
+        context.dispatch('addUser', { userID: result.userID });
         context.commit('setMessage', msg)
       } else {
         context.commit('setMessage', err)
@@ -148,36 +149,45 @@ export default createStore({
     },
 
     // Inside your Vuex store actions
-    async retrieveUser(context) {
-      // Retrieve the user ID from your state or other source
-      const userId = 1; // Replace with your actual user ID retrieval logic
+    // async retrieveUser(context) {
+    //   // Retrieve the user ID from your state or other source
+    //   const userId = 1; // Replace with your actual user ID retrieval logic
 
-      try {
-        const res = await axios.get(`${bStoreURL}user/${userId}`);
-        const { results } = await res.data;
-        if (results && results.length > 0) {
-          // Assuming the user data is returned as an array, take the first item
-          const user = results[0];
-          context.commit('setUser', user);
-        } else {
-          context.commit('setUser', null); // Set user to null if no data is found
-        }
-      } catch (error) {
-        console.error(error);
-        context.commit('setUser', null); // Handle errors and set user to null
-      }
-    },
-
-    // async addUser(context, payload) {
-    //   const res = await axios.post(`${bStoreURL}register`, payload);
-    //   const { result, err, msg } = await res.data;
-    //   if (result) {
-    //     context.commit('updateUser', result);
-    //     context.commit('setMessage', msg)
-    //   } else {
-    //     context.commit('setMessage', err)
+    //   try {
+    //     const res = await axios.get(`${bStoreURL}user/${userId}`);
+    //     const { results } = await res.data;
+    //     if (results && results.length > 0) {
+    //       // Assuming the user data is returned as an array, take the first item
+    //       const user = results[0];
+    //       context.commit('setUser', user);
+    //     } else {
+    //       context.commit('setUser', null); // Set user to null if no data is found
+    //     }
+    //   } catch (error) {
+    //     console.error(error);
+    //     context.commit('setUser', null); // Handle errors and set user to null
     //   }
     // },
+
+    // Inside your Vuex store actions
+async addUser(context, payload) {
+  try {
+    const res = await axios.post(`${bStoreURL}register`, payload);
+    const { result, err, msg } = await res.data;
+    if (result) {
+      const registeredUserId = result.userID; 
+      context.dispatch('retrieveUser', registeredUserId);
+      context.commit('setMessage', msg);
+    } else {
+      context.commit('setMessage', err);
+    }
+  } catch (error) {
+    console.error(error);
+    context.commit('setMessage', 'Error registering user');
+  }
+},
+
+
     async updateUser(context, payload) {
       try {
         const res = await axios.put(`${bStoreURL}user/${payload.ID}`, payload);
