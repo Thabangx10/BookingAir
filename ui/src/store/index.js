@@ -170,22 +170,22 @@ export default createStore({
     // },
 
     // Inside your Vuex store actions
-async addUser(context, payload) {
-  try {
-    const res = await axios.post(`${bStoreURL}register`, payload);
-    const { result, err, msg } = await res.data;
-    if (result) {
-      const registeredUserId = result.userID; 
-      context.dispatch('retrieveUser', registeredUserId);
-      context.commit('setMessage', msg);
-    } else {
-      context.commit('setMessage', err);
-    }
-  } catch (error) {
-    console.error(error);
-    context.commit('setMessage', 'Error registering user');
-  }
-},
+    async addUser(context, payload) {
+      try {
+        const res = await axios.post(`${bStoreURL}register`, payload);
+        const { result, err, msg } = await res.data;
+        if (result) {
+          const registeredUserId = result.userID;
+          context.dispatch('retrieveUser', registeredUserId);
+          context.commit('setMessage', msg);
+        } else {
+          context.commit('setMessage', err);
+        }
+      } catch (error) {
+        console.error(error);
+        context.commit('setMessage', 'Error registering user');
+      }
+    },
 
 
     async updateUser(context, payload) {
