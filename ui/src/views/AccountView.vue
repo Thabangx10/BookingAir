@@ -18,9 +18,16 @@
     <div v-if="bookedFlights.length > 0">
       <h3>Purchased Flights:</h3>
       <ul>
-        <li v-for="flight in bookedFlights" :key="flight.FlightID">
-          Flight ID: {{ flight.FlightID }}
-          <!-- Display other flight information as needed -->
+        <li v-for="booking in bookedFlights" :key="booking.ID">
+          Flight ID: {{ booking.FlightID }}
+          <!-- Display other flight information -->
+          <div v-for="flight in flights" :key="flight.ID" v-if="flight.ID === booking.FlightID">
+            Flight Details:
+            <p>Flight Name: {{ flight.Name }}</p>
+            <p>Departure Time: {{ flight.DepartureTime }}</p>
+            <p>Destination: {{ flight.Destination }}</p>
+            <!-- Add more flight details as needed -->
+          </div>
         </li>
       </ul>
     </div>
@@ -39,6 +46,9 @@ export default {
     },
     bookedFlights() {
       return this.$store.state.bookedFlights;
+    },
+    flights() {
+      return this.$store.state.flights;
     }
   },
   methods: {
