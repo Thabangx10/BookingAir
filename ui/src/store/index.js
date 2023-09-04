@@ -4,10 +4,10 @@ const bStoreURL = 'https://campreserve.onrender.com/'
 
 export default createStore({
   state: {
-    user: null,
+    // user: null,
     message: null,
     loading: false,
-    // user: [],
+    user: [],
     users: [],
     programs: [],
     flights: [],
@@ -49,8 +49,8 @@ export default createStore({
     setUsers (state, users) {
       state.users = users;
     },
-    addUser(state, users) {
-      state.users = users;
+    addUser(state, user) {
+      state.user = user;
     },
     updateUser(state, payload) {
       state.users = state.users.map(user => {
