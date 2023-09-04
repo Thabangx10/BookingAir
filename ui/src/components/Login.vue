@@ -7,12 +7,12 @@
         <div class="col-md-6 right">
           <div class="inputText">
             <header class="text-black pb-5 fw-bold">Login</header>
-            <form @submit.prevent="login">
+            <form @submit.prevent="loginUser">
               <div>
                 <input
                   type="text"
                   class="input"
-                  v-model="Email"
+                  v-model="email"
                   placeholder="Email"
                   required
                 />
@@ -21,7 +21,7 @@
                 <input
                   type="password"
                   class="input"
-                  v-model="UserPassword"
+                  v-model="password"
                   placeholder="Password"
                   required
                 />
@@ -49,14 +49,15 @@
     </div>
   </body>
 </template>
+
 <script>
 import Swal from "sweetalert2";
 
 export default {
   data() {
     return {
-      Email: "",
-      UserPassword: "",
+      email: "",
+      password: "",
       isLoading: false,
     };
   },
@@ -69,8 +70,8 @@ export default {
     async login() {
       this.isLoading = true;
       const userData = {
-        Email: this.Email,
-        UserPassword: this.UserPassword,
+        Email: this.email,
+        UserPassword: this.password,
       };
       try {
         await this.$store.dispatch("login", userData);
@@ -79,6 +80,7 @@ export default {
         this.$router.push("/programs");
       } catch (error) {
         console.log(error.message);
+        Swal.fire("Error", "Login failed", "error")
       } finally {
         this.isLoading = false;
       }
