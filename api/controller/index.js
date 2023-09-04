@@ -53,7 +53,7 @@ route.delete("/user/:id", (req, res) => {
 
 
 // Set up the routes for the program endpoints
-// ------------------------------Volunteer Programs route-------------------------------------------
+// ------------------------------Coding Programs route-------------------------------------------
 
 route.get("/programs", (req, res) => {
   program.retrievePrograms(req, res);
