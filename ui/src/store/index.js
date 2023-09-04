@@ -7,7 +7,7 @@ export default createStore({
     user: null,
     message: null,
     loading: false,
-    user: [],
+    // user: [],
     users: [],
     programs: [],
     flights: [],
