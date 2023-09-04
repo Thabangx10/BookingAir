@@ -398,11 +398,12 @@ export default createStore({
       let currentUser = JSON.parse(localStorage.getItem('user'));
       try {
         const res = await axios.get(`${bStoreURL}user/${currentUser?.ID}/bookings`);
-        context.commit('SetBooking', res.data.results);
+        context.commit('setBookedFlight', res.data.results); // Use 'setBookedFlight' mutation
       } catch (err) {
         console.error(err);
       }
     },
+    
 
 
 
