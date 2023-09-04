@@ -22,7 +22,7 @@
         <li v-for="booking in bookedFlights" :key="booking.ID">
           Flight ID: {{ booking.FlightID }}
           <!-- Display other flight information -->
-          <div v-for="flight in flights" :key="flight.ID" v-if="flight.ID === booking.FlightID">
+          <div v-for="flight in filteredFlights(booking.FlightID)" :key="flight.ID">
             Flight Details:
             <p>Flight Name: {{ flight.Name }}</p>
             <p>Departure Time: {{ flight.DepartureTime }}</p>
@@ -47,15 +47,16 @@ export default {
     },
     bookedFlights() {
       return this.$store.state.bookedFlights;
-    },
-    flights() {
-      return this.$store.state.flights;
     }
   },
   methods: {
     async viewBookedFlights() {
       // Call the retrieveBookings action to fetch the user's purchased flights
       await this.$store.dispatch('retrieveBookings');
+    },
+    filteredFlights(flightID) {
+      // Create a computed property to filter flights based on FlightID
+      return this.$store.state.flights.filter(flight => flight.ID === flightID);
     }
   }
 };
