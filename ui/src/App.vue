@@ -34,4 +34,10 @@ components:{
   color: #2c3e50;
 }
 
+@media screen and (min-width: 320px) {
+  .container-fluid {
+    padding: 10px;
+  }
+}
+
 </style>

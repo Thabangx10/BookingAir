@@ -1,26 +1,37 @@
 <template>
   <body>
     <div>
-      <h2 class="text-center animate__animated animate__zoomIn">Flight Booking</h2>
+      <h2 class="text-center animate__animated animate__zoomIn">
+        Flight Booking
+      </h2>
       <form class="flight-form" @submit.prevent="searchFlights">
         <div class="col-md-6 form-group">
           <label for="departure">Departure</label>
           <select v-model="selectedDepartureCity">
             <option value="">From:</option>
-            <option v-for="DepartureCity in DepartureCities" :key="DepartureCity">{{ DepartureCity }}</option>
+            <option
+              v-for="DepartureCity in DepartureCities"
+              :key="DepartureCity"
+            >
+              {{ DepartureCity }}
+            </option>
           </select>
         </div>
         <div class="col-md-6 form-group">
           <label for="destination">Destination</label>
           <select v-model="selectedArrivalCity">
             <option value="">To:</option>
-            <option v-for="ArrivalCity in ArrivalCities" :key="ArrivalCity">{{ ArrivalCity }}</option>
+            <option v-for="ArrivalCity in ArrivalCities" :key="ArrivalCity">
+              {{ ArrivalCity }}
+            </option>
           </select>
         </div>
         <div class="col-md-12">
           <button v-if="authenticated" class="search">Search Flights</button>
           <div v-else>
-            <router-link to="/registration"><button class="search">Login to Search</button></router-link>
+            <router-link to="/registration"
+              ><button class="search">Login to Search</button></router-link
+            >
           </div>
         </div>
       </form>
@@ -28,52 +39,70 @@
         <h3>Available Flights</h3>
         <div class="card" v-for="flight in searchedFlights" :key="flight.id">
           <div class="flight-details">
-            <p class="flight-route">{{ flight.DepartureCity }} to {{ flight.ArrivalCity }}</p>
+            <p class="flight-route">
+              {{ flight.DepartureCity }} to {{ flight.ArrivalCity }}
+            </p>
             <div class="flight-timings">
-              <p class="departure-time">Departure: {{ formatDate(flight.DepartureDate) }}, <br> Time: {{ flight.DepartureTime }}</p>
-              <p class="arrival-time">Arrival: {{ formatDate(flight.ArrivalDate) }}, <br> Time: {{ flight.ArrivalTime }}</p>
+              <p class="departure-time">
+                Departure: {{ formatDate(flight.DepartureDate) }}, <br />
+                Time: {{ flight.DepartureTime }}
+              </p>
+              <p class="arrival-time">
+                Arrival: {{ formatDate(flight.ArrivalDate) }}, <br />
+                Time: {{ flight.ArrivalTime }}
+              </p>
             </div>
             <p class="flight-price">Price: {{ flight.Price }}</p>
-            <button class="book-button" @click="bookFlight(flight)">Book Now</button>
+            <button class="book-button" @click="bookFlight(flight)">
+              Book Now
+            </button>
           </div>
         </div>
       </div>
     </div>
     <div>
-      <img src="https://i.postimg.cc/VNSRJnww/output-onlinegiftools.gif" alt="" class="loop-animation">
+      <img
+        src="https://i.postimg.cc/VNSRJnww/output-onlinegiftools.gif"
+        alt=""
+        class="loop-animation"
+      />
     </div>
   </body>
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters } from "vuex";
 
 export default {
   data() {
     return {
-      selectedDepartureCity: '',
-      selectedArrivalCity: '',
-      selectedDepartureDate: '',
+      selectedDepartureCity: "",
+      selectedArrivalCity: "",
+      selectedDepartureDate: "",
       searchedFlights: [],
-      userID: '',
-      flightsID: ''
+      userID: "",
+      flightsID: "",
     };
   },
   computed: {
-        // Map the 'authenticated' getter from Vuex store to a computed property
-        ...mapGetters(['authenticated']),
+    // Map the 'authenticated' getter from Vuex store to a computed property
+    ...mapGetters(["authenticated"]),
     // Get the list of flights from the Vuex store
     flights() {
-  const flights = this.$store.state.flights;
-  console.log('flights:', flights);
-  return flights;
-},
-formatDate() {
-    return function(date) {
-      const d = new Date(date);
-      return d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
-    };
-  },
+      const flights = this.$store.state.flights;
+      console.log("flights:", flights);
+      return flights;
+    },
+    formatDate() {
+      return function (date) {
+        const d = new Date(date);
+        return d.toLocaleDateString("en-US", {
+          month: "long",
+          day: "numeric",
+          year: "numeric",
+        });
+      };
+    },
     DepartureCities() {
       const DepartureCities = new Set();
       for (const flight of this.flights) {
@@ -91,7 +120,7 @@ formatDate() {
   },
   methods: {
     searchFlights() {
-      this.searchedFlights = this.flights.filter(flight => {
+      this.searchedFlights = this.flights.filter((flight) => {
         return (
           flight.DepartureCity === this.selectedDepartureCity &&
           flight.ArrivalCity === this.selectedArrivalCity
@@ -99,29 +128,21 @@ formatDate() {
       });
     },
     bookFlight(flight) {
-  // Set the booked flight in the Vuex store
-  this.$store.commit('bookFlight', flight);
-  // Redirect the user to the booking confirmation page
-  this.$router.push("/cart");
-}
+      // Set the booked flight in the Vuex store
+      this.$store.commit("bookFlight", flight);
+      // Redirect the user to the booking confirmation page
+      this.$router.push("/cart");
+    },
   },
   created() {
-    console.log('authenticated:', this.authenticated);
+    console.log("authenticated:", this.authenticated);
     // Fetch the list of flights from the Vuex store
-    this.$store.dispatch('fetchFlights');
+    this.$store.dispatch("fetchFlights");
   },
-}
+};
 </script>
 
-
-
-
-
-
-  
-  <style scoped>
-
-
+<style scoped>
 .card {
   display: flex;
   flex-wrap: wrap;
@@ -155,7 +176,8 @@ formatDate() {
   letter-spacing: 0.1rem;
 }
 
-.departure-time, .arrival-time {
+.departure-time,
+.arrival-time {
   font-size: 16px;
   font-weight: 800;
   margin: 0;
@@ -170,7 +192,7 @@ formatDate() {
 }
 
 .book-button {
-  background-color:  #21507e;
+  background-color: #21507e;
   color: #fff;
   border: none;
   border-radius: 5px;
@@ -184,8 +206,7 @@ formatDate() {
   background-color: #21467c;
 }
 
-  
-h2{
+h2 {
   font-size: 4rem;
   padding-top: 30px;
   color: rgb(27, 61, 102);
@@ -214,7 +235,8 @@ h2{
 .form-group label {
   font-weight: bold;
 }
-.form-group input, .form-group select {
+.form-group input,
+.form-group select {
   width: 100%;
   padding: 10px;
   border: 1px solid #ccc;
@@ -240,52 +262,55 @@ h2{
   background-color: #21467c;
 }
 
-  h1 {
-    font-size: 6rem;
-    font-family: 'Concert One', cursive;
-    color: black;
-  }
-  
-  body{
-    height: 100vh; 
-    width: 100%; 
-    overflow: hidden;
-  background: radial-gradient(circle, rgba(248,248,248,1) 0%,  rgb(193, 210, 232)100%);
-  font-family: 'Black Mango Medium';
+h1 {
+  font-size: 6rem;
+  font-family: "Concert One", cursive;
+  color: black;
+}
+
+body {
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  background: radial-gradient(
+    circle,
+    rgba(248, 248, 248, 1) 0%,
+    rgb(193, 210, 232) 100%
+  );
+  font-family: "Black Mango Medium";
   letter-spacing: 0.1rem;
+}
+
+.clean {
+  position: relative;
+  width: 100%;
+}
+
+.fade-top {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 20%;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0), #ffffff);
+}
+
+.clean img {
+  width: 100%;
+}
+
+.loop-animation {
+  animation: loop 8s linear infinite;
+  width: 200px;
+  /* filter: brightness(0) invert(1); */
+}
+
+@keyframes loop {
+  0% {
+    transform: translateX(-350%);
   }
-  
-  .clean {
-    position: relative;
-    width: 100%;
+  100% {
+    transform: translateX(400%);
   }
-  
-  .fade-top {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 20%;
-    background: linear-gradient(to bottom, rgba(255, 255, 255, 0), #ffffff);
-  }
-  
-  .clean img {
-    width: 100%;
-  }
-  
-  .loop-animation {
-    animation: loop 8s linear infinite;
-    width: 200px;
-    /* filter: brightness(0) invert(1); */
-  }
-  
-  @keyframes loop {
-    0% {
-      transform: translateX(-350%);
-    }
-    100% {
-      transform: translateX(400%);
-    }
-  }
-  </style>
-  
+}
+</style>

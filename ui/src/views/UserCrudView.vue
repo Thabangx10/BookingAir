@@ -283,7 +283,7 @@ button:hover {
   background-color: #f2f2f2;
 }
 
-@media(max-width: 946px){
+@media(min-width: 320px){
 	.table thead{
 		display: none;
 	}

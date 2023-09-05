@@ -104,4 +104,26 @@ button {
 button:hover {
   background-color: #1b206b;
 }
+
+
+@media screen and (min-width: 320px) {
+  h2 {
+    font-size: 3rem; /* Reduce the font size for smaller screens */
+  }
+
+  table {
+    font-size: 14px; /* Reduce the font size for table content */
+    line-height: 25px; /* Adjust the line height for readability */
+  }
+
+  th,
+  td {
+    padding: 8px; /* Reduce the cell padding for smaller screens */
+  }
+
+  button {
+    font-size: 12px; /* Reduce the button font size */
+    padding: 6px 12px; /* Adjust button padding for smaller screens */
+  }
+}
 </style>

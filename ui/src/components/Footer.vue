@@ -80,7 +80,7 @@ i {
 
 
 /* Media Query */
-@media screen  and (max-width:1080px) {
+@media screen  and (min-width:320px) {
     .footer i {
     font-size: small;
 }

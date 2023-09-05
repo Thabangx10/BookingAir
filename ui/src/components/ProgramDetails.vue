@@ -100,4 +100,19 @@ strong {
   font-size: 16px;
   letter-spacing: 0.1rem;
 }
+
+@media screen and (min-width: 320px) {
+  .container {
+    padding: 20px; /* Add some padding to the container for smaller screens */
+  }
+  
+  .col-md-6 {
+    width: 100%; /* Make columns take up full width on smaller screens */
+    margin-bottom: 20px; /* Add some space between columns */
+  }
+  
+  .program-info {
+    padding: 0; /* Remove padding for smaller screens */
+  }
+}
 </style>

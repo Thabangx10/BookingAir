@@ -169,7 +169,7 @@ h2 {
 }
 
 /* Responsive layout */
-@media (max-width: 768px) {
+@media (min-width: 320px) {
   h1 {
     font-size: 3.5rem;
   }
