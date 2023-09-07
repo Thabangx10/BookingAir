@@ -27,7 +27,7 @@ app.use((req, res, next) => {
   next();
 });
 
-// Mount the middleware stack on the app
+// Mount the middleware stack on the ap    p
 app.use(
   require('cookie-parser')(),
   cors(),
