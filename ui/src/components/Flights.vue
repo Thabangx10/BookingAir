@@ -217,7 +217,7 @@ h2 {
   flex-wrap: wrap;
   justify-content: space-between;
   padding: 20px;
-  margin-top: 50px;
+  /* margin-top: 50px; */
   background-color: #f1f1f1;
 }
 
@@ -311,6 +311,33 @@ body {
   }
   100% {
     transform: translateX(400%);
+  }
+}
+
+@media screen and (min-width: 320px) {
+  h2 {
+    font-size: 3rem; /* Reduce the font size for smaller screens */
+  }
+
+  .flight-form {
+    flex-direction: column; /* Adjust form layout for smaller screens */
+  }
+
+  .flight-form .form-group {
+    width: 100%; /* Make form input fields take up full width */
+  }
+
+  .search {
+    margin-top: -20px; /* Add space between button and header on smaller screens */
+  }
+
+  .flight-timings {
+    flex-direction: column; /* Adjust flight timings layout for smaller screens */
+  }
+
+  .card {
+    padding: 10px;
+    margin-top: -50px;
   }
 }
 </style>

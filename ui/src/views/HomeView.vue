@@ -186,32 +186,8 @@ h3 {
 /* ----------------------------------Media Queries */
 
 
-@media only screen and (min-width: 320px) {
   @media only screen and (min-width: 320px) {
-  .title {
-    font-size: 3rem; /* Adjust the title font size for smaller screens */
-    padding-top: 50px; /* Adjust the title padding for smaller screens */
-  }
-
-  .description {
-    font-size: 16px; /* Adjust the description font size for smaller screens */
-    line-height: 30px; /* Adjust the line height for better readability on smaller screens */
-  }
-
-  .how {
-    font-size: 3rem; /* Adjust the "How it works" title font size for smaller screens */
-    padding-top: 50px; /* Adjust the "How it works" title padding for smaller screens */
-  }
-
-  .card {
-    width: 100%; /* Make cards take up full width on smaller screens */
-    max-width: none; /* Remove max-width to use full available width */
-    margin: 20px 0; /* Adjust the margin between cards for smaller screens */
-  }
-
-  h3 {
-    font-size: 2rem; /* Adjust card title font size for smaller screens */
-  }
+     
 }
-}
+
 </style>
