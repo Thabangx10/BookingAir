@@ -146,7 +146,7 @@
   border-radius: 50%;
   }
   
-  @media (max-width: 768px) {
+  @media (min-width: 320px) {
   h1 {
   font-size: 36px;
   }

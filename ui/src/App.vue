@@ -1,30 +1,32 @@
 <template>
-  <NavBarVue></NavBarVue>
   <div class="container-fluid min-vh-100 p-0">
-  <router-view/>
+    <NavBarVue></NavBarVue>
+    <router-view />
   </div>
-<FooterVue></FooterVue>
+  <FooterVue></FooterVue>
 </template>
 
 <script>
-import NavBarVue from './components/NavBar.vue';
-import FooterVue from './components/Footer.vue';
-
+import NavBarVue from "./components/NavBar.vue";
+import FooterVue from "./components/Footer.vue";
 
 export default {
-components:{
-  NavBarVue,
-  FooterVue,
-}
-}
-
+  components: {
+    NavBarVue,
+    FooterVue,
+  },
+};
 </script>
 <style>
-  .body{
-	margin:0;
-	padding:20px;
-  background: radial-gradient(circle, rgba(248, 248, 248, 1) 0%, rgb(193, 210, 232) 100%);
-  font-family: 'Black Mango Medium';
+.body {
+  margin: 0;
+  padding: 20px;
+  background: radial-gradient(
+    circle,
+    rgba(248, 248, 248, 1) 0%,
+    rgb(193, 210, 232) 100%
+  );
+  font-family: "Black Mango Medium";
 }
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -34,4 +36,9 @@ components:{
   color: #2c3e50;
 }
 
+@media screen and (min-width: 320px) {
+  .container-fluid {
+    padding: 10px;
+  }
+}
 </style>

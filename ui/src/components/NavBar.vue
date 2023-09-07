@@ -181,7 +181,7 @@ export default {
 
 
 /* Adjustments for Smaller Screens */
-@media (max-width: 1075px) {
+@media (min-width: 320px) {
 
   .navbar-expand-lg .navbar-nav {
     margin-left: 0; /* Remove left margin for links */

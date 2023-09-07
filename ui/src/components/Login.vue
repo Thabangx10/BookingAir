@@ -51,6 +51,7 @@
 </template>
 
 <script>
+// import
 import Swal from "sweetalert2";
 
 export default {
@@ -203,7 +204,7 @@ span a:hover {
   color: #000;
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (min-width: 320px) {
     h1 {
         font-size: 2.5rem;
         padding-top: 50px;

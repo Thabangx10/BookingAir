@@ -1,10 +1,11 @@
 <template>
   <body>
     <div class="container">
-      <h1 class="text-center py-5">Program Details</h1>
-      <div class="row justify-content-center align-items-center">
+      <!-- <h1 class="text-center py-5">Program Details</h1> -->
+      <div class="row justify-content-center align-items-center main-content">
         <div class="col-md-6">
-          <div class="program-photo"><img :src="program.imgURL" /></div>
+          <div class="program-photo"><img :src="program.imgURL" />
+          </div>
         </div>
         <div class="col-md-6">
           <div class="program-info">
@@ -16,7 +17,9 @@
             <p>
               <strong>Description:</strong> {{ program.ProgramDescription }}
             </p>
-            <button class="search" @click.prevent="goToFlightsPage">Book Your Flight</button>
+            <button class="search" @click.prevent="goToFlightsPage">
+              Book Your Flight
+            </button>
           </div>
         </div>
       </div>
@@ -34,17 +37,21 @@ export default {
   created() {
     this.$store.dispatch("fetchProgram", this.$route.params.id);
   },
-  methods: { 
-    goToFlightsPage() { 
-      this.$router.push("/flights"); 
-  }, 
-}, 
+  methods: {
+    goToFlightsPage() {
+      this.$router.push("/flights");
+    },
+  },
 };
 </script>
 
 <style scoped>
 body {
-  background: radial-gradient(circle, rgba(248, 248, 248, 1) 0%, rgb(193, 210, 232) 100%);
+  background: radial-gradient(
+    circle,
+    rgba(248, 248, 248, 1) 0%,
+    rgb(193, 210, 232) 100%
+  );
   font-family: "Black Mango Medium", sans-serif;
   height: 100vh;
 }
@@ -99,5 +106,30 @@ strong {
   cursor: pointer;
   font-size: 16px;
   letter-spacing: 0.1rem;
+  margin-top: -10%;
+}
+
+.main-content {
+  margin-bottom: 60px; /* Add margin to separate content from footer */
+}
+
+@media screen and (min-width: 320px) {
+  .container {
+    padding: 20px; /* Add some padding to the container for smaller screens */
+  }
+
+  .col-md-6 {
+    width: 100%; /* Make columns take up full width on smaller screens */
+    margin-bottom: 60px; /* Add some space between columns */
+  }
+
+  .program-info {
+    padding: 0;
+    margin-top: -10%; /* Remove padding for smaller screens */
+  }
+
+  .main-content {
+    margin-bottom:  30px; /* Reduce margin for smaller screens */
+  }
 }
 </style>

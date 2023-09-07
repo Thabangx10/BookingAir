@@ -235,7 +235,7 @@ input {
   background-color: rgb(55, 98, 151);
 }
 
-@media (max-width: 768px) {
+@media (min-width: 320px) {
 
   h1{
     font-size: 3rem;
