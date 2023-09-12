@@ -142,8 +142,6 @@ export default {
         this.$router.push("/programs");
       } catch (error) {
         console.log(error.message);
-      } finally {
-        this.isLoading = false;
       }
     },
   },
