@@ -12,16 +12,11 @@ export default createStore({
     programs: [],
     flights: [],
     bookedFlights: [],
+    bookedHistory: [],
 
   },
   mutations: {
 
-    bookFlight(state, flight) {
-      state.bookedFlights.push(flight);
-    },
-    setBookedFlight(state, flight) {
-      state.bookedFlights = flight;
-    },
     addToCart(state, flight) {
       state.cart.push(flight);
     },
@@ -105,6 +100,18 @@ export default createStore({
     deleteFlight(state, id) {
       state.flights = state.flights.filter(flight => flight.id !== id);
     }
+  },
+
+  setBookedHistory(state, history) {
+    state.bookedHistory = history;
+  },
+
+  bookFlight(state, flight) {
+    state.bookedFlights.push(flight);
+  },
+
+  setBookedFlight(state, flight) {
+    state.bookedFlights = flight;
   },
 
 
@@ -350,6 +357,16 @@ export default createStore({
       }
     },
 
+    // Add an action to fetch booking history for the user
+    async fetchBookingHistory(context) {
+      let currentUser = JSON.parse(localStorage.getItem('user'));
+      try {
+        const res = await axios.get(`${bStoreURL}user/${currentUser?.ID}/booking-history`);
+        context.commit('setBookedHistory', res.data.results); // Use 'setBookedHistory' mutation
+      } catch (err) {
+        console.error(err);
+      }
+    },
 
 
     // ---------------------------------Bookings----------------------------------------------
@@ -397,13 +414,13 @@ export default createStore({
     async retrieveBookings(context) {
       let currentUser = JSON.parse(localStorage.getItem('user'));
       try {
-        const res = await axios.get(`${bStoreURL}user/${currentUser?.ID}/bookings`);
+        const res = await axios.get(`${bStoreURL}user/${payload.ID}/bookings`);
         context.commit('setBookedFlight', res.data.results); // Use 'setBookedFlight' mutation
       } catch (err) {
         console.error(err);
       }
     },
-    
+
 
 
 
@@ -418,23 +435,25 @@ export default createStore({
     getUsers: state => state.users,
     getPrograms: state => state.programs,
     getFlights: state => state.flights,
-    authenticated(state) {
-      return state.user !== null;
-    },
-    flights(state) {
-      return state.flights;
-    },
-    bookedFlights(state) {
-      return state.bookedFlights;
-    },
-    totalCost: state => {
-      let total = 0;
-      for (const flight of state.bookedFlights) {
-        total += flight.Price;
-      }
-      return total;
-    },
-  }
+    // Add a getter to get the booking history
+    getBookedHistory: state => state.bookedHistory,
+  authenticated(state) {
+    return state.user !== null;
+  },
+  flights(state) {
+    return state.flights;
+  },
+  bookedFlights(state) {
+    return state.bookedFlights;
+  },
+  totalCost: state => {
+    let total = 0;
+    for (const flight of state.bookedFlights) {
+      total += flight.Price;
+    }
+    return total;
+  },
+}
 });
 
 

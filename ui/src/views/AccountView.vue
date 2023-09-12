@@ -13,27 +13,19 @@
     <div v-else>
       <p>No user information available</p>
     </div>
+    <button @click="viewBookingHistory">View Booking History</button>
 
-    <button @click="viewBookedFlights">View Purchased Flights</button>
-
-    <div v-if="bookedFlights.length > 0">
-      <h3>Purchased Flights:</h3>
+    <div v-if="bookedHistory.length > 0">
+      <h3>Booking History:</h3>
       <ul>
-        <li v-for="booking in bookedFlights" :key="booking.ID">
-          Flight ID: {{ booking.FlightID }}
-          <!-- Display other flight information -->
-          <div v-for="flight in filteredFlights(booking.FlightID)" :key="flight.ID">
-            Flight Details:
-            <p>Flight Name: {{ flight.Name }}</p>
-            <p>Departure Time: {{ flight.DepartureTime }}</p>
-            <p>Destination: {{ flight.Destination }}</p>
-            <!-- Add more flight details as needed -->
-          </div>
+        <li v-for="booking in bookedHistory" :key="booking.ID">
+          <p>Booking ID: {{ booking.ID }}</p>
+          <p>Booking Date: {{ booking.Date }}</p>
         </li>
       </ul>
     </div>
     <div v-else>
-      <p>No purchased flights available</p>
+      <p>No booking history available</p>
     </div>
   </div>
 </template>
@@ -47,15 +39,16 @@ export default {
     },
     bookedFlights() {
       return this.$store.state.bookedFlights;
-    }
+    },
+    bookedHistory() {
+      return this.$store.getters.getBookedHistory;
+    },
   },
   methods: {
-    async viewBookedFlights() {
-      // Call the retrieveBookings action to fetch the user's purchased flights
-      await this.$store.dispatch('retrieveBookings');
+    async viewBookingHistory() {
+      await this.$store.dispatch('fetchBookingHistory', this.userID);
     },
     filteredFlights(flightID) {
-      // Create a computed property to filter flights based on FlightID
       return this.$store.state.flights.filter(flight => flight.ID === flightID);
     }
   }
