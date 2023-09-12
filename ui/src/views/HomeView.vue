@@ -1,12 +1,12 @@
 <template>
   <body>
-    <div>
+    <!-- <div>
       <img
         srcset="https://i.postimg.cc/B68jg3qP/Experience-the-world-while-making-an-impact-on-lives-2.png"
         alt=""
         class="bg"
       />
-    </div>
+    </div> -->
     <h1 class="title">Welcome</h1>
     <div class="welcome">
       <p class="description">
