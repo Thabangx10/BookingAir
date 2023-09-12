@@ -112,6 +112,7 @@ export default {
       PhoneNumber: "",
       userRole: "",
       isLoading: false,
+      errorMessage: "",
     };
   },
   computed: {
@@ -122,6 +123,7 @@ export default {
   methods: {
     async register() {
         this.isLoading = true;
+        this.errorMessage = "";
       const userData = {
         FirstName: this.FirstName,
         LastName: this.LastName,
@@ -141,7 +143,10 @@ export default {
         // Redirect the user to the program page on successful login
         this.$router.push("/programs");
       } catch (error) {
+        this.errorMessage = "Registration failed. Please try again.";
         console.log(error.message);
+      } finally {
+        this.isLoading = false;
       }
     },
   },
