@@ -176,7 +176,6 @@ export default createStore({
     //   }
     // },
 
-    // Inside your Vuex store actions
     async addUser(context, payload) {
       try {
         const res = await axios.post(`${bStoreURL}register`, payload);
