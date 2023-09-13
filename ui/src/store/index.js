@@ -99,19 +99,19 @@ export default createStore({
     },
     deleteFlight(state, id) {
       state.flights = state.flights.filter(flight => flight.id !== id);
-    }
-  },
+    },
 
-  setBookedHistory(state, history) {
-    state.bookedHistory = history;
-  },
-
-  bookFlight(state, flight) {
-    state.bookedFlights.push(flight);
-  },
-
-  setBookedFlight(state, flight) {
-    state.bookedFlights = flight;
+    setBookedHistory(state, history) {
+      state.bookedHistory = history;
+    },
+  
+    bookFlight(state, flight) {
+      state.bookedFlights.push(flight);
+    },
+  
+    setBookedFlight(state, flight) {
+      state.bookedFlights = flight;
+    },
   },
 
 
@@ -381,7 +381,6 @@ export default createStore({
         await axios.post(`${bStoreURL}user/${payload.ID}/booking`, payload)
           .then((data) => {
             statusCode = data.status
-
             message = data
           })
           .then(() => {
@@ -412,7 +411,7 @@ export default createStore({
     },
 
     async retrieveBookings(context) {
-      let currentUser = JSON.parse(localStorage.getItem('user'));
+      let payload = JSON.parse(localStorage.getItem('user'));
       try {
         const res = await axios.get(`${bStoreURL}user/${payload.ID}/bookings`);
         context.commit('setBookedFlight', res.data.results); // Use 'setBookedFlight' mutation
@@ -435,7 +434,6 @@ export default createStore({
     getUsers: state => state.users,
     getPrograms: state => state.programs,
     getFlights: state => state.flights,
-    // Add a getter to get the booking history
     getBookedHistory: state => state.bookedHistory,
   authenticated(state) {
     return state.user !== null;

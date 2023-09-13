@@ -315,6 +315,7 @@ body {
 }
 
 @media screen and (min-width: 320px) {
+
   h2 {
     font-size: 3rem; /* Reduce the font size for smaller screens */
   }

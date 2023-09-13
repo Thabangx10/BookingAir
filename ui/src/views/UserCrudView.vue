@@ -29,7 +29,7 @@
             <td data-label="FirstName">{{ user.FirstName }}</td>
             <td data-label="LastName">{{ user.LastName }}</td>
             <td data-label="Email">{{ user.Email }}</td>
-            <td data-label="UserPassword">{{ user.UserPassword }}</td>
+            <td data-label="UserPassword" id="password">{{ user.UserPassword }}</td>
             <td data-label="Address">{{ user.Address }}</td>
             <td data-label="PhoneNumber">{{ user.PhoneNumber }}</td>
             <td data-label="userRole">{{ user.userRole }}</td>
@@ -284,6 +284,10 @@ button:hover {
 }
 
 @media(min-width: 320px){
+
+#password {
+  display: none;
+}
 	.table thead{
 		display: none;
 	}
@@ -311,6 +315,7 @@ button:hover {
     font-size: 15px;
     font-weight: bold;
     text-align: left;
+    display: none;
 }
   img {
   width: 50px;

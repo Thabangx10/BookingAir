@@ -317,6 +317,7 @@ button:hover {
     font-size: 15px;
     font-weight: bold;
     text-align: left;
+    display: none;
 }
   img {
   width: 50px;

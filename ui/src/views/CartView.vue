@@ -1,30 +1,38 @@
 <template>
   <body>
-    <div>
+    <div class="container">
       <h2 class="text-center animate__animated animate__zoomIn">Booking Confirmation</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Departure</th>
-            <th>Arrival</th>
-            <th>Price</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="(flight, index) in bookedFlights" :key="index">
-            <td>{{ flight.DepartureCity }} ({{ formatDate(flight.DepartureDate) }} {{ flight.DepartureTime }})</td>
-            <td>{{ flight.ArrivalCity }} ({{ formatDate(flight.ArrivalDate) }} {{ flight.ArrivalTime }})</td>
-            <td>{{ flight.Price }}</td>
-          </tr>
-        </tbody>
-        <tfoot>
-          <tr>
-            <td colspan="2">Total:</td>
-            <td>{{ totalCost }}</td>
-            <td><button @click="Checkout(flight)">CheckOut</button></td>
-          </tr>
-        </tfoot>
-      </table>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Departure</th>
+              <th>Arrival</th>
+              <th>Price</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(flight, index) in bookedFlights" :key="index">
+              <td>
+                {{ flight.DepartureCity }} ({{ formatDate(flight.DepartureDate) }} {{ flight.DepartureTime }})
+              </td>
+              <td>
+                {{ flight.ArrivalCity }} ({{ formatDate(flight.ArrivalDate) }} {{ flight.ArrivalTime }})
+              </td>
+              <td>{{ flight.Price }}</td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="2">Total:</td>
+              <td>{{ totalCost }}</td>
+              <td>
+                <button class="checkout-button" @click="Checkout(flight)">CheckOut</button>
+              </td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
     </div>
   </body>
 </template>
@@ -57,23 +65,38 @@ body {
     rgb(193, 210, 232) 100%
   );
   font-family: "Black Mango Medium";
-  height: 100vh;
+  min-height: 100vh;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  max-width: 800px;
+  padding: 20px;
+  width: 90%;
 }
 
 h2 {
-  font-size: 4rem;
+  font-size: 3rem;
   padding-top: 30px;
   color: rgb(27, 61, 102);
+  text-align: center;
+}
+
+.table-container {
+  overflow-x: auto;
 }
 
 table {
   width: 100%;
   border-collapse: collapse;
   margin: 20px 0;
-  letter-spacing: 3px;
-  word-spacing: 5px;
-  font-size: 17px;
-  line-height: 35px;
+  letter-spacing: 1px;
+  word-spacing: 3px;
+  font-size: 1rem;
+  line-height: 1.5;
 }
 
 th,
@@ -88,42 +111,37 @@ tr:hover {
   background-color: #e8e8e8;
 }
 
-button {
+.checkout-button {
   background-color: #0f205a;
   color: white;
   border: none;
-  padding: 8px 16px;
+  padding: 10px 20px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  font-size: 14px;
+  font-size: 1rem;
   border-radius: 4px;
   cursor: pointer;
+  transition: background-color 0.3s;
 }
 
-button:hover {
+.checkout-button:hover {
   background-color: #1b206b;
 }
 
-
-@media screen and (min-width: 320px) {
-  h2 {
-    font-size: 3rem; /* Reduce the font size for smaller screens */
-  }
-
+@media screen and (max-width: 768px) {
   table {
-    font-size: 14px; /* Reduce the font size for table content */
-    line-height: 25px; /* Adjust the line height for readability */
+    font-size: 0.9rem;
   }
 
   th,
   td {
-    padding: 8px; /* Reduce the cell padding for smaller screens */
+    padding: 8px;
   }
 
-  button {
-    font-size: 12px; /* Reduce the button font size */
-    padding: 6px 12px; /* Adjust button padding for smaller screens */
+  .checkout-button {
+    font-size: 0.9rem;
+    padding: 8px 16px;
   }
 }
 </style>

@@ -1,0 +1,54 @@
+[33md7edd1ab[m[33m ([m[1;36mHEAD -> [m[1;32mfrontend[m[33m, [m[1;31morigin/frontend[m[33m)[m HEAD@{0}: reset: moving to HEAD
+[33md7edd1ab[m[33m ([m[1;36mHEAD -> [m[1;32mfrontend[m[33m, [m[1;31morigin/frontend[m[33m)[m HEAD@{1}: reset: moving to HEAD
+[33md7edd1ab[m[33m ([m[1;36mHEAD -> [m[1;32mfrontend[m[33m, [m[1;31morigin/frontend[m[33m)[m HEAD@{2}: reset: moving to HEAD
+[33md7edd1ab[m[33m ([m[1;36mHEAD -> [m[1;32mfrontend[m[33m, [m[1;31morigin/frontend[m[33m)[m HEAD@{3}: commit: Programs
+[33m61730e15[m HEAD@{4}: pull: Merge made by the 'ort' strategy.
+[33mbdd35658[m HEAD@{5}: commit: ;
+[33m13aeda71[m HEAD@{6}: commit: Optimising
+[33m39b1201a[m HEAD@{7}: commit: Optimising
+[33m525ee260[m HEAD@{8}: commit: Optimising
+[33maffdb9f0[m HEAD@{9}: commit: validation
+[33m5a12950d[m HEAD@{10}: commit: Sep 12
+[33m9d78aefe[m HEAD@{11}: commit: deploying
+[33m060e8332[m HEAD@{12}: pull: Merge made by the 'ort' strategy.
+[33m00c98587[m HEAD@{13}: commit: testing
+[33m51cfbe52[m HEAD@{14}: commit: checking login system
+[33m161aa67a[m HEAD@{15}: commit: checking login system
+[33m1e2f9f14[m HEAD@{16}: commit: checking login system
+[33m47ed204d[m HEAD@{17}: commit: checking login system
+[33me6e21cbd[m HEAD@{18}: commit: checking login system
+[33m9cbf62f9[m HEAD@{19}: commit: checking login system
+[33m63013502[m HEAD@{20}: commit: checking login system
+[33mfdc94350[m HEAD@{21}: commit: checking login
+[33mfee1a7ba[m HEAD@{22}: commit: checking login system
+[33m1629fb2d[m HEAD@{23}: commit: checking login system
+[33m259c314e[m HEAD@{24}: commit: checking login system
+[33ma3c2e344[m HEAD@{25}: commit: checking login system
+[33mdff60f23[m HEAD@{26}: commit: Checking the login system
+[33m8f3f2639[m HEAD@{27}: commit: checking login system
+[33m2f81d386[m HEAD@{28}: commit: checking login system
+[33m6ab77e19[m HEAD@{29}: pull: Merge made by the 'ort' strategy.
+[33mc880bc21[m HEAD@{30}: commit: at college
+[33m91fd641f[m HEAD@{31}: checkout: moving from frontend to frontend
+[33m91fd641f[m HEAD@{32}: checkout: moving from backend to frontend
+[33m239ed9e4[m[33m ([m[1;31morigin/backend[m[33m, [m[1;32mbackend[m[33m)[m HEAD@{33}: pull: Merge made by the 'ort' strategy.
+[33m4bfea70d[m HEAD@{34}: commit: checking
+[33m64c23cc9[m HEAD@{35}: commit: backend still dude
+[33ma3caba5d[m HEAD@{36}: commit: backend still dude
+[33m4fa305c1[m HEAD@{37}: commit: backend still dude
+[33mbe1fc23e[m HEAD@{38}: commit: backend still dude
+[33m1ea7c925[m HEAD@{39}: commit: backend busy checking api endpoints
+[33m74ac8abc[m HEAD@{40}: commit: backend busy checking api endpoints
+[33me171b688[m HEAD@{41}: commit: backend busy checking api endpoints
+[33mc6373089[m HEAD@{42}: pull: Fast-forward
+[33m2b6c044d[m HEAD@{43}: checkout: moving from frontend to backend
+[33m91fd641f[m HEAD@{44}: commit: firebase done, now double checking backend
+[33mbc8b63eb[m HEAD@{45}: commit: checking firebase
+[33m3b5a5f49[m HEAD@{46}: commit: firebase
+[33m51131029[m HEAD@{47}: commit: firebase
+[33m6ef30829[m HEAD@{48}: commit: firebase
+[33mf47f7412[m HEAD@{49}: commit: will check firebase soon
+[33m61a1cb49[m HEAD@{50}: commit: firebase
+[33mb7dcfa4b[m HEAD@{51}: commit: firebase
+[33m21aa5156[m HEAD@{52}: checkout: moving from main to frontend
+[33m5040fe01[m[33m ([m[1;32mmain[m[33m)[m HEAD@{53}: clone: from https://github.com/Thabangx10/BookingAir.git
