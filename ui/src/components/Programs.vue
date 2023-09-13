@@ -74,7 +74,7 @@ export default {
     },
 
     // Filter the programs by the selected location and search query
-    filteredPrograms() {
+    filteredPrograms() {llllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll
       let filtered = this.programs;
 
       // If a location is selected, filter by that location
