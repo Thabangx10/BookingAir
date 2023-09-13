@@ -1,6 +1,6 @@
 <template>
   <div class="body">
-    <h1 animate__animated animate__zoomIn>Programs</h1>
+    <h1 class="animate__animated animate__zoomIn">Programs</h1>
     <div v-if="loading">
       <Spinner/>
     </div>
@@ -12,9 +12,8 @@
             <th>Location</th>
             <th>Period</th>
             <th>Program Description</th>
-            <th>Image URL</th>
-            <th><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"
-                @click="showAddModal">Add Program</button></th>
+            <th>Image</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -23,57 +22,18 @@
             <td data-label="Location">{{ program.Location }}</td>
             <td data-label="Period">{{ program.Period }}</td>
             <td data-label="Program Description">{{ program.ProgramDescription }}</td>
-            <td data-label="Image URL"><img :src="program.imgURL" /></td>
+            <td data-label="Image">
+              <img :src="program.imgURL" alt="Program Image" />
+            </td>
             <td>
               <button @click="showEditModal(program)">Edit</button>
               <button @click="deleteProgram(program)">Delete</button>
-              <!-- Add Program Modal -->
-              <div class="modal" tabindex="-1" role="dialog" :class="{ 'd-block': showModal }">
-                <div class="modal-dialog" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h1 class="modal-title fs-5" id="exampleModalLabel">{{ modalTitle }}</h1>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
-                        @click="cancelForm"></button>
-                    </div>
-                    <div class="modal-body">
-                      <form @submit.prevent="submitForm">
-                        <div class="mb-3">
-                          <label for="program-name" class="form-label">Program Name:</label>
-                          <input id="program-name" v-model="form.ProgramName" required class="form-control" />
-                        </div>
-                        <div class="mb-3">
-                          <label for="location" class="form-label">Location:</label>
-                          <input id="location" v-model="form.Location" required class="form-control" />
-                        </div>
-                        <div class="mb-3">
-                          <label for="period" class="form-label">Period:</label>
-                          <input id="period" v-model="form.Period" required class="form-control" />
-                        </div>
-                        <div class="mb-3">
-                          <label for="program-description" class="form-label">Program Description:</label>
-                          <textarea id="program-description" v-model="form.ProgramDescription" required
-                            class="form-control"></textarea>
-                        </div>
-                        <div class="mb-3">
-                          <label for="img-url" class="form-label">Image URL:</label>
-                          <input id="img-url" v-model="form.imgURL" required class="form-control" />
-                        </div>
-                        <div class="modal-footer">
-                          <button v-if="!editingProgram" @click="showModal()">Add</button>
-                          <button @click="updateProgram(program)">Edit</button>
-                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
-                            @click="cancelForm">Cancel</button>
-                        </div>
-                      </form>
-                    </div>
-                  </div>
-                </div>
-              </div>
             </td>
           </tr>
         </tbody>
       </table>
+      <button type="button" class="btn btn-primary add-button" data-bs-toggle="modal" data-bs-target="#exampleModal"
+              @click="showAddModal">Add Program</button>
     </div>
   </div>
 </template>
