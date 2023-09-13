@@ -80,6 +80,7 @@ body {
 
 h2 {
   font-size: 3rem;
+  font-size: 2rem;
   padding-top: 30px;
   color: rgb(27, 61, 102);
   text-align: center;
