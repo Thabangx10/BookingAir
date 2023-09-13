@@ -32,8 +32,7 @@
           </tr>
         </tbody>
       </table>
-      <button type="button" class="btn btn-primary add-button" data-bs-toggle="modal" data-bs-target="#exampleModal"
-              @click="showAddModal">Add Program</button>
+      <button @click="showAddModal">Add Program</button>
     </div>
   </div>
 </template>
