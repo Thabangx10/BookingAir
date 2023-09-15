@@ -2,7 +2,7 @@
   <div class="body">
     <h1 class="animate__animated animate__zoomIn">Programs</h1>
     <div v-if="loading">
-      <Spinner/>
+      <Spinner />
     </div>
     <div v-else>
       <table class="table">
@@ -21,13 +21,15 @@
             <td data-label="Program Name">{{ program.ProgramName }}</td>
             <td data-label="Location">{{ program.Location }}</td>
             <td data-label="Period">{{ program.Period }}</td>
-            <td data-label="Program Description">{{ program.ProgramDescription }}</td>
+            <td data-label="Program Description">
+              {{ program.ProgramDescription }}
+            </td>
             <td data-label="Image">
               <img :src="program.imgURL" alt="Program Image" />
             </td>
             <td>
               <button @click="showEditModal(program)">Edit</button>
-              <button @click="deleteProgram(program)">Delete</button>
+              <button @click="deleteProgram(program.id)">Delete</button>
             </td>
           </tr>
         </tbody>
@@ -38,24 +40,25 @@
 </template>
 
 <script>
-import Spinner from '../components/Spinner.vue'
+import Spinner from "../components/Spinner.vue";
+
 export default {
-  name: 'Admin',
-  components:{
-    Spinner
+  name: "Admin",
+  components: {
+    Spinner,
   },
   computed: {
     programs() {
       return this.$store.state.programs;
-    }, 
+    },
     loading() {
       return this.$store.state.loading;
-    }
+    },
   },
   data() {
     return {
       showModal: false,
-      editingProgram: false, // new property
+      editingProgram: false,
       modalTitle: "",
       modalAction: "",
       form: {
@@ -68,15 +71,23 @@ export default {
     };
   },
   created() {
-  this.$store.commit('setLoading', true); //  True will show the spinner
-  this.$store.dispatch('fetchPrograms').then(() => {
-    this.$store.commit('setLoading', false); // False will hide the spinner after the programs are fetched
-  });
-},
+    this.fetchPrograms();
+  },
   methods: {
+    async fetchPrograms() {
+      this.$store.commit("setLoading", true);
+      try {
+        await this.$store.dispatch("fetchPrograms");
+      } catch (error) {
+        console.error(error);
+      } finally {
+        this.$store.commit("setLoading", false);
+      }
+    },
+
     showAddModal() {
       this.modalTitle = "Add Program";
-      this.modalAction = "Add"; // Set the modalAction property to "Add"
+      this.modalAction = "Add";
       this.form = {
         ProgramName: "",
         Location: "",
@@ -91,70 +102,74 @@ export default {
       this.modalTitle = "Edit Program";
       this.modalAction = "Update";
       this.form = { ...program };
-      this.editingProgram = true; // set editingProgram to true when editing
+      this.editingProgram = true;
       this.showModal = true;
     },
 
-    submitForm() {
-      if (this.modalAction === "Add") {
-        this.$store.dispatch("addProgram", this.form);
-      } else if (this.modalAction === "Update") {
-        this.$store.dispatch("updateProgram", this.form);
+    async submitForm() {
+      if (this.editingProgram) {
+        // Update program
+        try {
+          await this.$store.dispatch("updateProgram", this.form);
+          console.log("Program updated successfully");
+        } catch (err) {
+          console.error(err);
+        } finally {
+          this.showModal = false;
+          this.editingProgram = false;
+        }
+      } else {
+        // Add program
+        try {
+          const response = await this.$store.dispatch("addProgram", this.form);
+          const { result, err } = response.data;
+          if (result) {
+            console.log("Program added successfully");
+          } else {
+            console.error(err || "Error adding program");
+          }
+        } catch (err) {
+          console.error(err);
+        } finally {
+          this.showModal = false;
+        }
       }
-      this.showModal = false;
-      this.editingProgram = false; // set editingProgram back to false when closing modal
     },
 
     cancelForm() {
       this.showModal = false;
+      this.editingProgram = false;
     },
-    deleteProgram(program) {
-      console.log(program); // Add this line
-      console.log('Program: ', program.ID);
+
+    async deleteProgram(programId) {
+      console.log("Program ID: ", programId);
       if (confirm("Are you sure you want to delete this program?")) {
-        if (program.ID) {
-          this.$store.dispatch("deleteProgram", program.ID).then(() => {
-            // handle success
-            console.log("Program deleted successfully");
-          }).catch(err => {
-            // handle error
-            console.error(err);
-          });
-        } else {
-          console.error("Invalid program ID");
+        try {
+          await this.$store.dispatch("deleteProgram", programId);
+          console.log("Program deleted successfully");
+        } catch (err) {
+          console.error(err);
         }
       }
     },
-    updateProgram(program) {
-      console.log('Program: ', program.ID);
-      if (program.ID) {
-        this.$store.dispatch("updateProgram", program.ID).then(() => {
-          // handle success
-          console.log("Program updated successfully");
-        })
-          .catch(err => {
-            // handle error
-            console.error(err);
-          });
-      } else {
-        console.error("Invalid program ID");
-      }
-    }
-  }
-}
+  },
+};
 </script>
-
 
 <style scoped>
 .body {
   margin: 0;
   padding: 20px;
-  background: radial-gradient(circle, rgba(248, 248, 248, 1) 0%, rgb(193, 210, 232) 100%);
-  font-family: 'Black Mango Medium';
+  background: radial-gradient(
+    circle,
+    rgba(248, 248, 248, 1) 0%,
+    rgb(193, 210, 232) 100%
+  );
+  font-family: "Black Mango Medium";
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center; 
+  justify-content: center;
   min-height: 100vh;
 }
 
@@ -225,7 +240,6 @@ button:hover {
 
 /* Remove table header for small screens */
 @media (min-width: 320px) {
-
   .table th,
   .table td {
     display: block;

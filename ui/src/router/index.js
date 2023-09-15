@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import store from '../store'
 import HomeView from '../views/HomeView.vue'
 import AboutView from '../views/AboutView.vue'
 import ContactView from '../views/ContactView.vue'
@@ -43,7 +44,7 @@ const routes = [
   {
     path: '/login',
     name: 'login',
-    component: LoginView
+    component: LoginView,
   },
   {
     path: '/account',
@@ -58,7 +59,7 @@ const routes = [
   {
     path: '/admin',
     name: 'admin',
-    component: AdminView
+    component: AdminView,
   },
   {
     path: '/program/:id',
@@ -89,5 +90,29 @@ const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
 })
+
+// Navigation guards
+router.beforeEach((to, from, next) => {
+  const requiresAuth = to.matched.some((record) => record.meta.requiresAuth);
+  const requiredRoles = to.meta.roles;
+
+  if (requiresAuth) {
+    if (!store.getters.isAuthenticated) {
+      next({ path: '/login' });
+    } else {
+      // Check if the user has the required role
+      if (requiredRoles && !requiredRoles.includes(store.state.userRole)) {
+        // Handle unauthorized access
+        next({ name: 'unauthorized' });
+      } else {
+        next();
+      }
+    }
+  } else {
+    next();
+  }
+});
+
+
 
 export default router

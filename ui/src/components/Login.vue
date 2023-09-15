@@ -81,7 +81,7 @@ export default {
         this.$router.push("/programs");
       } catch (error) {
         console.log(error.message);
-        Swal.fire("Error", "Login failed", "error")
+        Swal.fire("Error", "Login failed", "error");
       } finally {
         this.isLoading = false;
       }
@@ -205,46 +205,45 @@ span a:hover {
 }
 
 @media only screen and (min-width: 320px) {
-    h1 {
-        font-size: 2.5rem;
-        padding-top: 50px;
-    }
+  h1 {
+    font-size: 2.5rem;
+    padding-top: 50px;
+  }
 
-    .row {
-        height: auto;
-        border-radius: 0;
-        box-shadow: none;
-        margin-top: 0;
-    }
+  .row {
+    height: auto;
+    border-radius: 0;
+    box-shadow: none;
+    margin-top: 0;
+  }
 
-    .image1 {
-        height: 200px;
-        border-radius: 0;
-    }
+  .image1 {
+    height: 200px;
+    border-radius: 0;
+  }
 
-    .text {
-        top: 30%;
-    }
+  .text {
+    top: 30%;
+  }
 
-    .right {
-        padding: 20px;
-    }
+  .right {
+    padding: 20px;
+  }
 
-    .input,
-    #userRole {
-        height: 35px;
-        margin-bottom: 10px;
-    }
+  .input,
+  #userRole {
+    height: 35px;
+    margin-bottom: 10px;
+  }
 
-    .submit {
-        height: 35px;
-        padding: 0 20px;
-    }
+  .submit {
+    height: 35px;
+    padding: 0 20px;
+  }
 
-    .login {
-        margin-top: 10px;
-    }
+  .login {
+    margin-top: 10px;
+  }
 }
 </style>
 
-<!-- https://www.divinectorweb.com/2023/02/login-and-signup-form-switch-javascript.html -->

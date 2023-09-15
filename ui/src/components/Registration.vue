@@ -14,6 +14,8 @@
                   class="input"
                   v-model="FirstName"
                   placeholder="First Name"
+                  pattern="[A-Za-z]+"
+                  title="Please enter a valid first name containing only letters."
                   required
                 />
               </div>
@@ -23,15 +25,19 @@
                   class="input"
                   v-model="LastName"
                   placeholder="Last Name"
+                  pattern="[A-Za-z]+"
+                  title="Please enter a valid last name containing only letters."
                   required
                 />
               </div>
               <div>
                 <input
-                  type="text"
+                  type="email"
                   class="input"
                   v-model="Email"
                   placeholder="Email"
+                  pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
+                  title="Please enter a valid email address."
                   required
                 />
               </div>
@@ -70,10 +76,6 @@
                   placeholder="user"
                   required
                 />
-                <!-- <select class="input" v-model="userRole">
-                      <option value="1">user</option>
-                      <option value="2">admin</option>
-                    </select> -->
               </div>
               <div>
                 <button class="submit" :disabled="isLoading">
@@ -121,7 +123,7 @@ export default {
   },
   methods: {
     async register() {
-        this.isLoading = true;
+      this.isLoading = true;
       const userData = {
         FirstName: this.FirstName,
         LastName: this.LastName,
@@ -129,7 +131,6 @@ export default {
         UserPassword: this.UserPassword,
         Address: this.Address,
         PhoneNumber: this.PhoneNumber,
-        userRole: this.userRole,
       };
       try {
         await this.$store.dispatch("register", userData);
@@ -139,7 +140,7 @@ export default {
           "You can now login to your account"
         );
         // Redirect the user to the program page on successful login
-        this.$router.push("/programs");
+        this.$router.push("/login");
       } catch (error) {
         console.log(error.message);
       }

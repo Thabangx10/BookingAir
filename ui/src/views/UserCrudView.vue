@@ -20,7 +20,7 @@
             <th>PhoneNumber</th>
             <th>userRole</th>
 
-            <th><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"
+            <th><button v-if="isAdmin" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"
                 @click="showAddModal">Add User</button></th>
           </tr>
         </thead>
@@ -109,6 +109,9 @@ export default {
     },
     loading() {
       return this.$store.state.loading;
+    },
+    isAdmin() {
+      return this.$store.state.user.userRole === 'admin';
     }
   },
   data() {
@@ -190,7 +193,7 @@ export default {
       }
     },
     updateUser(user) {
-      console.log('User: ', user.ID);
+      console.log('User: ', user);
       if (user.ID) {
         this.$store.dispatch("updateUser", user.ID).then(() => {
           console.log("User updated successfully");

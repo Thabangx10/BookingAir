@@ -5,6 +5,7 @@ const bStoreURL = 'https://campreserve.onrender.com/'
 export default createStore({
   state: {
     user: null,
+    userRole: null,
     message: null,
     loading: false,
     // user: [],
@@ -26,9 +27,6 @@ export default createStore({
     setLoading(state, loading) {
       state.loading = loading
     },
-    setUser(state, payload) {
-      state.user = payload
-    },
     setMessage(state, payload) {
       state.message = payload
     },
@@ -41,6 +39,14 @@ export default createStore({
       state.bookings = values
     },
     // ---------------------User---------------------------------------
+    setUserRole(state, role) {
+      state.userRole = role;
+    },
+
+    setUser(state, payload) {
+      state.user = payload
+    },
+    
     setUsers(state, users) {
       state.users = users;
     },
@@ -130,18 +136,28 @@ export default createStore({
     },
 
     async login(context, payload) {
-      console.log(payload);
-      const res = await axios.post(`${bStoreURL}login`, payload)
-      const { result, err, msg } = await res.data
-      if (result) {
-        context.commit('setUser', result)
-        localStorage.setItem("user", JSON.stringify(result))
-        context.dispatch('addUser', { userID: result.userID });
-        context.commit('setMessage', msg)
-      } else {
-        context.commit('setMessage', err)
+      try {
+        // Make the API request to your login endpoint
+        const res = await axios.post(`${bStoreURL}login`, payload);
+        const { result, err, msg } = await res.data;
+    
+        if (result) {
+          // Login successful: Update user data and userRole in the store
+          context.commit('setUser', result);
+          context.commit('setUserRole', result.UserRole); // Set the userRole
+          localStorage.setItem("user", JSON.stringify(result));
+          context.commit('setMessage', msg);
+        } else {
+          // Login failed: Handle the error
+          context.commit('setMessage', err);
+        }
+    
+        context.commit('setLoading', false);
+      } catch (error) {
+        console.error(error);
+        context.commit('setMessage', 'Login failed');
+        context.commit('setLoading', false);
       }
-      context.commit('setLoading', false);
     },
 
     // --------------------------------------------USERS--------------------------------------------------------------
@@ -155,33 +171,12 @@ export default createStore({
       }
     },
 
-    // Inside your Vuex store actions
-    // async retrieveUser(context) {
-    //   // Retrieve the user ID from your state or other source
-    //   const userId = 1; // Replace with your actual user ID retrieval logic
-
-    //   try {
-    //     const res = await axios.get(`${bStoreURL}user/${userId}`);
-    //     const { results } = await res.data;
-    //     if (results && results.length > 0) {
-    //       // Assuming the user data is returned as an array, take the first item
-    //       const user = results[0];
-    //       context.commit('setUser', user);
-    //     } else {
-    //       context.commit('setUser', null); // Set user to null if no data is found
-    //     }
-    //   } catch (error) {
-    //     console.error(error);
-    //     context.commit('setUser', null); // Handle errors and set user to null
-    //   }
-    // },
-
     async addUser(context, payload) {
       try {
         const res = await axios.post(`${bStoreURL}register`, payload);
-        const { result, err, msg } = await res.data;
+        const { result, err, msg, userID } = await res.data; // Remove extra object destructuring
         if (result) {
-          const registeredUserId = result.userID;
+          const registeredUserId = userID; // Update variable name
           context.dispatch('retrieveUser', registeredUserId);
           context.commit('setMessage', msg);
         } else {
@@ -192,6 +187,7 @@ export default createStore({
         context.commit('setMessage', 'Error registering user');
       }
     },
+    
 
 
     async updateUser(context, payload) {
