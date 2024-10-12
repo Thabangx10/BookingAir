@@ -122,19 +122,38 @@ export default createStore({
       }
     },
 
-  async login (context, payload) {
-    console.log(payload);
-    const res = await axios.post(`${bStoreURL}login`, payload)
-    const { result, err, msg } = await res.data
-    if (result) {
-      context.commit('setUser', result)
-      localStorage.setItem("user", JSON.stringify(result))
-      context.commit('setMessage', msg)
-    } else {
-      context.commit('setMessage', err)
+    async login(context, payload) {
+      try {
+        context.commit('setLoading', true);  // Set loading state
+        // Make the API request to your login endpoint
+        const res = await axios.post(`${bStoreURL}login`, payload);
+        const { result, err, msg } = res.data;
+    
+        if (result) {
+          // Assuming result is an object that contains the user's information
+          context.commit('setUser', result);  // Set the user data
+          context.commit('setUserRole', result.userRole || '');  // Set the userRole, default to empty string if undefined
+          
+          // Store the user information in localStorage
+          localStorage.setItem("user", JSON.stringify(result));
+    
+          // Optional: You can also save the token if it's part of the result
+          if (result.token) {
+            localStorage.setItem("token", result.token);
+          }
+    
+          context.commit('setMessage', msg);  // Set a success message
+        } else {
+          context.commit('setMessage', err);  // Handle the error returned from the API
+        }
+      } catch (error) {
+        console.error(error);
+        context.commit('setMessage', 'Login failed due to a network error or invalid credentials');
+      } finally {
+        context.commit('setLoading', false);  // Reset loading state
+      }
     }
-    context.commit('setLoading', false);
-  },
+    ,
 
   // --------------------------------------------USERS--------------------------------------------------------------
   async retrieveUsers(context) {

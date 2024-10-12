@@ -1,4 +1,5 @@
 <template>
+
   <body>
     <h1 class="text-center animate__animated animate__zoomIn">Registration</h1>
     <div class="container">
@@ -9,76 +10,34 @@
             <header class="text-black fw-bold">Register</header>
             <form @submit.prevent="register">
               <div>
-                <input
-                  type="text"
-                  class="input"
-                  v-model="FirstName"
-                  placeholder="First Name"
-                  required
-                />
+                <input type="text" class="input" v-model="FirstName" placeholder="First Name" required />
               </div>
               <div>
-                <input
-                  type="text"
-                  class="input"
-                  v-model="LastName"
-                  placeholder="Last Name"
-                  required
-                />
+                <input type="text" class="input" v-model="LastName" placeholder="Last Name" required />
               </div>
               <div>
-                <input
-                  type="text"
-                  class="input"
-                  v-model="Email"
-                  placeholder="Email"
-                  required
-                />
+                <input type="text" class="input" v-model="Email" placeholder="Email" required />
               </div>
               <div>
-                <input
-                  type="password"
-                  class="input"
-                  v-model="UserPassword"
-                  placeholder="Password"
-                  required
-                />
+                <input type="password" class="input" v-model="UserPassword" placeholder="Password" required />
               </div>
               <div>
-                <input
-                  type="text"
-                  class="input"
-                  v-model="Address"
-                  placeholder="Address"
-                  required
-                />
+                <input type="text" class="input" v-model="Address" placeholder="Address" required />
               </div>
               <div>
-                <input
-                  type="text"
-                  class="input"
-                  v-model="PhoneNumber"
-                  placeholder="Phone Number"
-                  required
-                />
+                <input type="text" class="input" v-model="PhoneNumber" placeholder="Phone Number" required />
               </div>
               <div>
-                <input
-                  type="text"
-                  class="input"
-                  v-model="userRole"
-                  placeholder="user"
-                  required
-                />
-                <!-- <select class="input" v-model="userRole">
-                      <option value="1">user</option>
-                      <option value="2">admin</option>
-                    </select> -->
+                <input type="text" class="input" v-model="userRole" placeholder="user" required />
+                <select class="input" v-model="userRole">
+                  <option value="1">user</option>
+                  <option value="2">admin</option>
+                </select>
               </div>
               <div>
                 <button class="submit" :disabled="isLoading">
                   <span v-if="isLoading">
-                    <i class="fa-solid fa-spinner"></i> Loading...
+                    <i class="fa-solid fa-spinner fa-spin"></i> Loading...
                   </span>
                   <span v-else> Submit </span>
                 </button>
@@ -86,10 +45,8 @@
               <p>{{ message }}</p>
             </form>
             <div class="login fw-bold text-black">
-              <span
-                >Already have an account?
-                <router-link to="/login">Login</router-link></span
-              >
+              <span>Already have an account?
+                <router-link to="/login">Login</router-link></span>
             </div>
           </div>
         </div>
@@ -110,10 +67,11 @@ export default {
       UserPassword: "",
       Address: "",
       PhoneNumber: "",
-      userRole: "",
+      userRole: "user",  // default role
       isLoading: false,
     };
-  },
+  }
+  ,
   computed: {
     message() {
       return this.$store.state.message;
@@ -121,7 +79,7 @@ export default {
   },
   methods: {
     async register() {
-        this.isLoading = true;
+      this.isLoading = true;
       const userData = {
         FirstName: this.FirstName,
         LastName: this.LastName,
@@ -133,16 +91,23 @@ export default {
       };
       try {
         await this.$store.dispatch("register", userData);
-        Swal.fire(
-          "Success",
-          "Registration successful",
-          "You can now login to your account"
-        );
-        // Redirect the user to the program page on successful login
-        this.$router.push("/programs");
+        Swal.fire({
+          title: "Success",
+          text: "Registration successful. Redirecting to programs page...",
+          icon: "success",
+          timer: 2000,  // Redirects after 2 seconds
+          showConfirmButton: false,
+        });
+        setTimeout(() => {
+          this.$router.push("/programs");
+        }, 2000);
       } catch (error) {
+        Swal.fire("Error", "Registration failed, please try again", "error");
         console.log(error.message);
+      } finally {
+        this.isLoading = false;
       }
+
     },
   },
 };
@@ -150,11 +115,9 @@ export default {
 
 <style scoped>
 body {
-  background: radial-gradient(
-    circle,
-    rgba(248, 248, 248, 1) 0%,
-    rgb(193, 210, 232) 100%
-  );
+  background: radial-gradient(circle,
+      rgba(248, 248, 248, 1) 0%,
+      rgb(193, 210, 232) 100%);
   font-family: "Black Mango Medium";
   margin: auto;
   min-height: 100vh;
