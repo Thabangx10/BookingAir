@@ -20,39 +20,58 @@ class User {
     const loginQRY = `
       SELECT ID, FirstName, LastName, Email, UserPassword, Address, PhoneNumber, userRole
       FROM Users
-      WHERE Email = '${Email}';
+      WHERE Email = ?;
     `;
 
     // Execute the query and handle the result
-    database.query(loginQRY, async (err, data) => {
-      if (err) throw err;
+    database.query(loginQRY, [Email] ,async (err, data) => {
+      if (err) {
+        console.error(err);  // Log the error for debugging purposes
+        return res.status(500).json({ err: "Database error" });
+      }
+
       if (!data.length || data == null) {
         // If no user was found with the given email, return an error
-        res.status(401).json({
-          err: "The email address is incorrect",
-        });
-      } else {
+        return res.status(401).json({ err: "Invalid email address" });
+
+      }
         // If a user was found, compare the password hash with the one in the database
-        await bcrypt.compare(
+        bcrypt.compare(
           UserPassword,
           data[0].UserPassword,
           async (cErr, cResult) => {
-            if (cErr) throw cErr;
+            if (cErr) {
+              throw cErr;
+            }
+
             // If the passwords match, create a JWT token and save it as a cookie
             const jwToken = createToken({
-              Email,
-              UserPassword,
+              email: data[0].Email,
+              id: data[0].ID,
+              userRole: data[0].userRole,
             });
+
             res.cookie("LegitUser", jwToken, {
               maxAge: 3600000,
               httpOnly: true,
+              secure: true,  // Uncomment for production to enforce HTTPS
+              sameSite: 'Strict'
             });
+
             // Return a success message and the user data
             if (cResult) {
-              res.status(200).json({
+              return res.status(200).json({
                 msg: "Logged in",
                 jwToken,
-                result: data[0],
+                result: {
+                  id: data[0].ID,
+                  firstName: data[0].FirstName,
+                  lastName: data[0].LastName,
+                  email: data[0].Email,
+                  address: data[0].Address,
+                  phoneNumber: data[0].PhoneNumber,
+                  userRole: data[0].userRole,
+                }
               });
             } else {
               // If the passwords don't match, return an error
@@ -62,8 +81,57 @@ class User {
             }
           }
         );
-      }
     });
+  }
+
+  async register(req, res) {
+    // Get user information from the request body
+    let detail = req.body;
+
+    try {
+      // Hash the user's password using bcrypt with a cost factor of 15
+      detail.UserPassword = await hash(detail.UserPassword, 15);
+
+      // Set user information that will be used for authentication
+      let user = {
+        Email: detail.Email,
+        UserPassword: detail.UserPassword,
+      };
+
+      // SQL query to insert a new user into the database
+      const loginQRY = `
+        INSERT INTO Users
+        SET ?;
+      `;
+
+      // Execute the query with user information as a parameter
+      database.query(loginQRY, [detail], (err) => {
+        if (err) {
+          // If there's an error, return an error message
+          console.error(err); // Log the error for debugging purposes
+          res
+            .status(500)
+            .json({ error: "Registration failed. Please try again later." });
+        } else {
+          // If successful, create a JSON Web Token and save it in a cookie with a duration of 1 hour
+          const jwToken = createToken(user);
+          res.cookie("LegitUser", jwToken, {
+            maxAge: 3600000,
+            httpOnly: true,
+          });
+
+          // Return a success message and token
+          res
+            .status(201)
+            .json({ message: "Registration successful", token: jwToken });
+        }
+      });
+    } catch (error) {
+      console.error(error); // Log any unexpected errors
+      res
+        .status(500)
+        .json({ error: "Registration failed. Please try again later." });
+    }
   }
 
   // Retrieve all users
@@ -106,128 +174,129 @@ class User {
     });
   }
 
-  async register(req, res) {
-    try {
-      const data = req.body;
+  // async register(req, res) {
+  //   try {
+  //     const data = req.body;
 
-      // Ensure data.userPass is a valid string and meets password criteria
-      const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+  //     // Ensure data.userPass is a valid string and meets password criteria
+  //     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
-      if (!passwordRegex.test(data.userPass)) {
-        return res.status(400).json({
-          status: 400,
-          msg: 'Invalid password. It must contain at least 8 characters, including one uppercase letter, one lowercase letter, one number, and one special character.',
-        });
-      }
+  //     if (!passwordRegex.test(data.userPass)) {
+  //       return res.status(400).json({
+  //         status: 400,
+  //         msg: 'Invalid password. It must contain at least 8 characters, including one uppercase letter, one lowercase letter, one number, and one special character.',
+  //       });
+  //     }
 
-      // Generate a salt
-      const saltRounds = 15;
-      const salt = await bcrypt.genSalt(saltRounds);
+  //     // Generate a salt
+  //     const saltRounds = 15;
+  //     const salt = await bcrypt.genSalt(saltRounds);
 
-      // Encrypt the password using the generated salt
-      const hashedPassword = await bcrypt.hash(data.userPass, salt);
+  //     // Encrypt the password using the generated salt
+  //     const hashedPassword = await bcrypt.hash(data.userPass, salt);
 
-      // Create a user object with email and hashed password
-      const user = {
-        emailAdd: data.emailAdd,
-        userPass: hashedPassword,
-      };
+  //     // Create a user object with email and hashed password
+  //     const user = {
+  //       emailAdd: data.emailAdd,
+  //       userPass: hashedPassword,
+  //     };
 
-      // Insert the user data into the database
-      const query = `
-        INSERT INTO Users
-        SET ?;
-      `;
-      db.query(query, user, (err) => {
-        if (err) {
-          console.error(err);
-          res.status(500).json({
-            status: 500,
-            msg: "Registration failed.",
-          });
-        } else {
-          // Create a token for the registered user
-          const token = createToken(user);
+  //     // Insert the user data into the database
+  //     const query = `
+  //       INSERT INTO Users
+  //       SET ?;
+  //     `;
+  //     db.query(query, user, (err) => {
+  //       if (err) {
+  //         console.error(err);
+  //         res.status(500).json({
+  //           status: 500,
+  //           msg: "Registration failed.",
+  //         });
+  //       } else {
+  //         // Create a token for the registered user
+  //         const token = createToken(user);
 
-          res.status(201).json({
-            status: 201,
-            msg: "You are now registered.",
-            token: token,
-          });
-        }
-      });
-    } catch (err) {
-      console.error(err);
-      res.status(500).json({
-        status: 500,
-        msg: "Registration failed.",
-      });
-    }
-  }
+  //         res.status(201).json({
+  //           status: 201,
+  //           msg: "You are now registered.",
+  //           token: token,
+  //         });
+  //       }
+  //     });
+  //   } catch (err) {
+  //     console.error(err);
+  //     res.status(500).json({
+  //       status: 500,
+  //       msg: "Registration failed.",
+  //     });
+  //   }
+  // }
 
   // Login endpoint
-  async login(req, res) {
-    try {
-      const data = req.body;
+  // async login(req, res) {
+  //   try {
+  //     const data = req.body;
 
-      // Retrieve the user from the database by email
-      const query = `
-        SELECT *
-        FROM Users
-        WHERE emailAdd = ?;
-      `;
-      db.query(query, [data.emailAdd], async (err, results) => {
-        if (err) {
-          console.error(err);
-          return res.status(500).json({
-            status: 500,
-            msg: "Login failed.",
-          });
-        }
+  //     // Retrieve the user from the database by email
+  //     const query = `
+  //       SELECT *
+  //       FROM Users
+  //       WHERE emailAdd = ?;
+  //     `;
+  //     db.query(query, [data.emailAdd], async (err, results) => {
+  //       if (err) {
+  //         console.error(err);
+  //         return res.status(500).json({
+  //           status: 500,
+  //           msg: "Login failed.",
+  //         });
+  //       }
 
-        if (results.length === 0) {
-          return res.status(401).json({
-            status: 401,
-            msg: "Invalid credentials.",
-          });
-        }
+  //       if (results.length === 0) {
+  //         return res.status(401).json({
+  //           status: 401,
+  //           msg: "Invalid credentials.",
+  //         });
+  //       }
 
-        const user = results[0];
+  //       const user = results[0];
 
-        // Compare the provided password with the stored hashed password
-        const passwordMatch = await bcrypt.compare(data.userPass, user.userPass);
+  //       // Compare the provided password with the stored hashed password
+  //       const passwordMatch = await bcrypt.compare(data.userPass, user.userPass);
 
-        if (!passwordMatch) {
-          return res.status(401).json({
-            status: 401,
-            msg: "Invalid credentials.",
-          });
-        }
+  //       if (!passwordMatch) {
+  //         return res.status(401).json({
+  //           status: 401,
+  //           msg: "Invalid credentials.",
+  //         });
+  //       }
 
-        // Create a token for the logged-in user
-        const token = createToken(user);
+  //       // Create a token for the logged-in user
+  //       const token = createToken(user);
 
-        res.status(200).json({
-          status: 200,
-          msg: "Login successful.",
-          token: token,
-        });
-      });
-    } catch (err) {
-      console.error(err);
-      res.status(500).json({
-        status: 500,
-        msg: "Login failed.",
-      });
-    }
-  }
+  //       res.status(200).json({
+  //         status: 200,
+  //         msg: "Login successful.",
+  //         token: token,
+  //       });
+  //     });
+  //   } catch (err) {
+  //     console.error(err);
+  //     res.status(500).json({
+  //       status: 500,
+  //       msg: "Login failed.",
+  //     });
+  //   }
+  // }
 
   updateUser(req, res) {
     // Get the data from the request body
     let data = req.body;
     // If the user password is not null or undefined, hash the password
-    if (data.UserPassword !== null || data.UserPassword !== undefined)
+    if (data.UserPassword !== null || data.UserPassword !== undefined) {
       data.UserPassword = hashSync(data.UserPassword, 15);
+    }
     // Set up the SQL query
     const loginQRY = `
         UPDATE Users
@@ -236,7 +305,9 @@ class User {
         `;
     // Execute the query and update the user record with the given ID
     database.query(loginQRY, [data, req.params.id], (err) => {
-      if (err) throw err;
+      if (err) {
+        throw err;
+      }
       // Return a success message with status code 200
       res.status(200).json({ msg: "A row was affected" });
     });
