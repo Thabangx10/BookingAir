@@ -20,39 +20,58 @@ class User {
     const loginQRY = `
       SELECT ID, FirstName, LastName, Email, UserPassword, Address, PhoneNumber, userRole
       FROM Users
-      WHERE Email = '${Email}';
+      WHERE Email = ?;
     `;
 
     // Execute the query and handle the result
-    database.query(loginQRY, async (err, data) => {
-      if (err) throw err;
+    database.query(loginQRY, [Email] ,async (err, data) => {
+      if (err) {
+        console.error(err);  // Log the error for debugging purposes
+        return res.status(500).json({ err: "Database error" });
+      }
+
       if (!data.length || data == null) {
         // If no user was found with the given email, return an error
-        res.status(401).json({
-          err: "The email address is incorrect",
-        });
-      } else {
+        return res.status(401).json({ err: "Invalid email address" });
+
+      }
         // If a user was found, compare the password hash with the one in the database
-        await bcrypt.compare(
+        bcrypt.compare(
           UserPassword,
           data[0].UserPassword,
           async (cErr, cResult) => {
-            if (cErr) throw cErr;
+            if (cErr) {
+              throw cErr;
+            }
+
             // If the passwords match, create a JWT token and save it as a cookie
             const jwToken = createToken({
-              Email,
-              UserPassword,
+              email: data[0].Email,
+              id: data[0].ID,
+              userRole: data[0].userRole,
             });
+
             res.cookie("LegitUser", jwToken, {
               maxAge: 3600000,
               httpOnly: true,
+              secure: true,  // Uncomment for production to enforce HTTPS
+              sameSite: 'Strict'
             });
+
             // Return a success message and the user data
             if (cResult) {
-              res.status(200).json({
+              return res.status(200).json({
                 msg: "Logged in",
                 jwToken,
-                result: data[0],
+                result: {
+                  id: data[0].ID,
+                  firstName: data[0].FirstName,
+                  lastName: data[0].LastName,
+                  email: data[0].Email,
+                  address: data[0].Address,
+                  phoneNumber: data[0].PhoneNumber,
+                  userRole: data[0].userRole,
+                }
               });
             } else {
               // If the passwords don't match, return an error
@@ -62,7 +81,6 @@ class User {
             }
           }
         );
-      }
     });
   }
 
@@ -276,8 +294,9 @@ class User {
     // Get the data from the request body
     let data = req.body;
     // If the user password is not null or undefined, hash the password
-    if (data.UserPassword !== null || data.UserPassword !== undefined)
+    if (data.UserPassword !== null || data.UserPassword !== undefined) {
       data.UserPassword = hashSync(data.UserPassword, 15);
+    }
     // Set up the SQL query
     const loginQRY = `
         UPDATE Users
@@ -286,7 +305,9 @@ class User {
         `;
     // Execute the query and update the user record with the given ID
     database.query(loginQRY, [data, req.params.id], (err) => {
-      if (err) throw err;
+      if (err) {
+        throw err;
+      }
       // Return a success message with status code 200
       res.status(200).json({ msg: "A row was affected" });
     });
