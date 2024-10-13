@@ -29,10 +29,10 @@
               </div>
               <div>
                 <input type="text" class="input" v-model="userRole" placeholder="user" required />
-                <select class="input" v-model="userRole">
+                <!-- <select class="input" v-model="userRole">
                   <option value="1">user</option>
                   <option value="2">admin</option>
-                </select>
+                </select> -->
               </div>
               <div>
                 <button class="submit" :disabled="isLoading">

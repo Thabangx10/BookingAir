@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { createStore } from 'vuex'
-const bStoreURL = 'https://campreserve.onrender.com/'
+const bStoreURL = "https://campreserve.onrender.com/";
 
 export default createStore({
   state: {
@@ -12,7 +12,9 @@ export default createStore({
     programs: [],
     flights: [],
     bookedFlights: [],
-    
+    booking: null,
+    bookings: [],
+    cart: [],
   },
   mutations: {
 
@@ -31,9 +33,6 @@ export default createStore({
     setLoading(state, loading) {
       state.loading = loading
     },
-    setUser (state, payload) {
-      state.user = payload
-    },
     setMessage (state, payload) {
       state.message = payload
     },
@@ -48,6 +47,9 @@ export default createStore({
     // ---------------------User---------------------------------------
     setUsers (state, users) {
       state.users = users;
+    },
+    setUser (state, user) {
+      state.user = user;
     },
     addUser(state, users) {
       state.users = users;
@@ -239,7 +241,7 @@ export default createStore({
       const res = await axios.post(`${bStoreURL}program`, payload);
       const { result, err, msg } = await res.data;
       if (result) {
-        context.commit('updateProgram', result);
+        context.commit('addProgram', result);
         context.commit('setMessage', msg)
       } else {
         context.commit('setMessage', err)
@@ -393,7 +395,7 @@ async updateFlight(context, payload) {
     let currentUser = JSON.parse(localStorage.getItem('user'));
     try {  
       const res = await axios.get(`${bStoreURL}user/${currentUser?.ID}/bookings`);
-      context.commit('SetBooking', res.data.results);
+      context.commit('setBooking', res.data.results);
     } catch(err) {
       console.error(err);
     }
